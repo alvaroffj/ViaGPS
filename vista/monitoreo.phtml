@@ -1,0 +1,45 @@
+<?php
+?>
+<link rel="stylesheet" type="text/css" href="css/menuGMap.css" />
+<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script> 
+<script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="js/ui/jquery.ui.draggable.js"></script>
+<script src="js/menuGMap.js" type="text/javascript"></script>-->
+<script src="js/monitoreo.js" type="text/javascript"></script>
+<div class="center_content" style="padding-left: 0px">
+    <div id="map_canvas" style="width:100%; height:550px; position: absolute; top:40px; left: 0;"></div>
+</div>
+<form name="buscaDireccion" method="post" action="" id="buscaDireccion" style="display:none">
+    <p><label for="s">Ingrese la direcci&oacute;n a buscar y presione Enter</label>
+    <input type="text" class="text-input required" name="s" value="" id="s"/></p>
+</form>
+<form name="puntoForm" method="post" action="" id="puntoForm" style="display:none;">
+    <h2>Nuevo Punto de interes</h2>
+    <p id="msg" style="display:none;"></p>
+    <p>
+        <label>Nombre:</label>
+        <input class="text-input medium-input required" type="text" name="nom" value="" id="nom"/>
+        <input type="hidden" name="accountID" value="<?=$cp->getSession()->get("accountID")?>" id="accountID"/>
+        <input type="hidden" name="id" value="" id="id"/>
+    </p>
+    <div class="clear"></div>
+    <p>
+        <label>Direcci&oacute;n:</label>
+        <input class="text-input medium-input required" type="text" name="dir" id="dir" value=""/>
+        <input type="hidden" name="lat" value="" id="lat"/>
+        <input type="hidden" name="lon" value="" id="lon"/>
+    </p>
+    <div class="clear"></div>
+    <p>
+        <label>Radio:</label>
+        <input class="text-input medium-input required number" type="text" name="rad" id="rad"  value="50"/>
+    </p>
+    <div class="clear"></div>
+    <p>
+        <input class="submit" type="submit" value="Guardar" id="submit"/>
+        <a class="cancelar" onClick="delNewPunto(); return false;" id="cancelar">Cancelar</a>
+    </p>
+    <div class="clear"></div>
+</form>

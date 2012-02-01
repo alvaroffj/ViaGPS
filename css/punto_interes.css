@@ -1,0 +1,32 @@
+#map {
+    width: 505px;
+    float: left;
+    margin-right: 10px;
+}
+
+#formu {
+    float: left;
+    width: 400px;
+    margin-left: 0px;
+}
+
+form label {
+    width: 85px;
+    text-align: left;
+}
+
+form p .button {
+    margin-left: 85px;
+}
+
+form input#dir {
+/*    width: 280px;*/
+}
+
+form div.input {
+    margin-left: 90px;
+}
+
+form div img{
+    vertical-align: top;
+}

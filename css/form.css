@@ -1,0 +1,202 @@
+form {
+    width: 484px;
+/*    border: 1px solid #ccc;*/
+    margin-left: 20px;
+}
+form label {
+    color: #333;
+    font-weight: normal;
+    font-size: 13px;
+    float: left;
+    width: 170px;
+    padding: 0;
+}
+
+form label.check {
+/*    margin-left: 170px;*/
+/*    border: 1px solid #ccc;*/
+    padding: 5px;
+    width: 90px;
+    margin-top: 3px;
+}
+
+form label.check input {
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+form label span.tooltip {
+    font-size: 11px;
+    font-weight: normal;
+    color: #999;
+    display: block;
+/*    border: 1px solid #000;*/
+    padding: 0px;
+    margin: 0;
+}
+
+form fieldset legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+form p{
+    color: #777;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+form p img {
+    border: none;
+    vertical-align: top;
+}
+
+form .elementos {
+    margin-left: 175px;
+}
+
+form .elementos .elemento {
+    border-left: 2px solid #ccc;
+    padding: 5px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+form .elementos .elemento a{
+    margin: 0px;
+    padding: 0px;
+/*    border: 1px solid #000;*/
+}
+
+
+form input.text-input,
+form select,
+form textarea,
+form .wysiwyg {
+    padding: 6px;
+    border: 1px solid #d5d5d5;
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+}
+
+form .small-input {
+    width: 80px !important;
+}
+
+form .medium-input {
+    width: 300px;
+}
+
+form .dir-input {
+    width: 270px !important;
+}
+
+form .large-input {
+    width: 97.5% !important;
+    font-size: 16px !important;
+    padding: 8px !important;
+}
+
+form textarea {
+/*    width: 97.5% !important;*/
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form select {
+    padding: 5px;
+    background: #fff;
+}
+
+form input[type="checkbox"],
+form input[type="radio"] {
+    padding: 0;
+    background: none;
+    border: 0;
+}
+
+form p .button {
+    width: auto;
+    margin-top: 5px;
+    margin-left: 170px;
+    font-family: Verdana, Arial, sans-serif;
+    display: inline-block;
+    background-color: #BF2E1A;
+    border: 1px solid #BF2E1A !important;
+    padding: 4px 20px 4px 20px !important;
+    color: white !important;
+    font-size: 11px !important;
+    cursor: pointer;
+    background-image: url(../images/menu_bg2.gif);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+
+.notification {
+    position: relative;
+    margin: 0 0 10px 0;
+    padding: 0;
+    border: 1px solid #fff;
+/*    background-position: 10px 11px !important;*/
+/*    background-repeat: no-repeat !important;*/
+    font-size: 13px;
+    height: 30px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+.attention {
+    background: #fffbcc url('../images/icons/exclamation.png') 10px 11px no-repeat;
+    border-color: #e6db55;
+    color: #666452;
+    background-color: #fffbcc;
+}
+
+.information {
+/*    background: #dbe3ff url('../images/icons/information.png');*/
+    border-color: #a2b4ee;
+    color: #585b66;
+    background-color: #dbe3ff;
+}
+
+.success {
+/*    background: #d5ffce url('../images/icons/tick_circle.png');*/
+    border-color: #9adf8f;
+    color: #556652;
+    background-color: #d5ffce;
+}
+
+.error {
+/*    background: #ffcece url('../images/icons/cross_circle.png');*/
+    border-color: #df8f8f;
+    color: #665252;
+    background-color: #ffcece;
+}
+
+.notification div {
+    display:block;
+    font-style:normal;
+    padding: 5px;
+    line-height: 20px;
+}
+
+.notification .close {
+    color:#990000;
+    font-size:9px;
+    position:absolute;
+    right:5px;
+    top:5px;
+}
+
+form div.dia {
+    width: 600px;
+    margin-left: 170px;
+    margin-bottom: 10px;
+    color: #333;
+}

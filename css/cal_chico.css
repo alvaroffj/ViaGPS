@@ -1,0 +1,86 @@
+.fecha {
+    width: 70px !important;
+    cursor: pointer;
+}
+
+form.inline select {
+    width: 100px;
+}
+.time {
+    width: 50px !important;
+}
+
+
+.ui-datepicker {
+    background-color: #fff;
+    border: 1px solid #dddddd;
+/*    width: 192px;*/
+    padding: 3px;
+    color: #999;
+/*    margin-left: -46px;*/
+    margin-top: -1px;
+}
+.ui-datepicker-header {
+    background-image: url(../images/menu_bg2.gif);
+/*    height: 25px;*/
+    padding: 2px;
+}
+.ui-datepicker-prev {
+/*    border: 1px solid red;*/
+    float: left;
+    cursor:pointer;
+    padding: 6px 2px;
+    color: #fff;
+}
+.ui-datepicker-next {
+/*    border: 1px solid green;*/
+    float: right;
+    cursor:pointer;
+    padding: 6px 2px;
+    color: #fff;
+}
+.ui-datepicker-title {
+    text-align: center;
+/*    border: 1px solid green;*/
+    padding: 6px 2px;
+    color: #fff;
+    font-weight: bold;
+}
+.ui-datepicker-calendar {
+    width: 200px;
+}
+.ui-state-default {
+    font-size: 12px;
+    padding: 2px;
+/*    border: 1px solid #ccc;*/
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+}
+
+a.ui-state-default {
+    color: #BF2E1A;
+}
+
+a.ui-state-active {
+    font-weight: bold;
+}
+
+span.ui-state-disabled {
+    color: #ededed;
+}
+
+a.ui-state-disabled {
+    color: #ededed;
+    cursor: default;
+}
+
+table.ui-datepicker-calendar thead tr th span{
+    font-size: 13px;
+    font-weight: bold;
+    color: #999;
+    width: 18px;
+/*    border: 1px solid #ccc;*/
+    padding: 2px;
+    display: inline-block;
+}

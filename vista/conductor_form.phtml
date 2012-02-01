@@ -1,0 +1,91 @@
+<?php
+function getSelect($obj, $val, $id, $nom, $sel = null, $style=null, $onChange=null, $ninguno = false) {
+    $r = "<SELECT name='$nom' class='medium-input' style='$style' onChange=\"" . $onChange . "\" id='$nom'>";
+    if($ninguno)
+        $r .= "<OPTION value = '0'>Ninguno</OPTION>";
+    else 
+        $r .= "<OPTION value = '-1' DISABLED>Selecciona</OPTION>";
+    foreach ($obj as $o) {
+        if ($sel == $o->$id) {
+            $r .= "<OPTION value='" . $o->$id . "' SELECTED>" . $o->$val . "</OPTION>";
+        } else {
+            $r .= "<OPTION value='" . $o->$id . "'>" . $o->$val . "</OPTION>";
+        }
+    }
+    $r .= "</SELECT>";
+    return $r;
+}
+
+$error = array("Los cambios fueron guardados correctamente", "Los cambios NO pudieron ser guardados", "El conductor NO pudo ser creado");
+if(isset($_GET["e"])) {
+    $msg = $error[$_GET["e"]];
+    if($_GET["e"]>0) {
+        $tipoMsg = "error";
+    } else {
+        $tipoMsg = "success";
+    }
+} else {
+    if($cp->getCSec()->getCSec()->op == "add_grupo") {
+        $msg = "<strong>Complete</strong> los siguientes campos";
+        $tipoMsg = "info";
+    } else {
+        $msg = "<strong>Edite</strong> los campos que quiera modificar";
+        $tipoMsg = "info";
+    }
+}
+?>
+<!--<link rel="stylesheet" type="text/css" href="css/form.css" />-->
+<script src="js/usuario_form.js" type="text/javascript"></script>
+<div class="center_content">
+    <div id="top-nav">
+        <ul>
+            <li><a href="?sec=configuracion&ssec=conductor">Volver</a></li>
+        </ul>
+    </div>
+    <h1>Conductores</h1>
+    <div class="bloque">
+    <h2><?=$cp->getCSec()->getCSec()->tilSec?></h2>
+    <form action="?sec=configuracion&ssec=conductor&do=<?=$cp->getCSec()->getCSec()->op?>" method="post" name="formu" id="formu" style="width: 500px;">
+        <div class="alert-message <?=$tipoMsg;?> png_bg">
+            <p><?=$msg;?></p>
+        </div>
+        <div class="clearfix">
+            <label>Nombre:</label>
+            <div class="input">
+            <input class="text-input medium-input required" type="text" name="nom" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->displayName:""?>" />
+            <input type="hidden" name="id" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->driverID:""?>" id="id"/>
+            <input type="hidden" name="accountID" value="<?=$cp->getSession()->get("accountID")?>"/>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label>RUT:</label>
+            <div class="input">
+            <input class="text-input medium-input required" type="text" name="rut" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->rut:""?>"/>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label>Tel&eacute;fono:</label>
+            <div class="input">
+            <input class="text-input medium-input required" type="text" name="tel" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->contactPhone:""?>"/>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label>Veh&iacute;culo:</label>
+            <div class="input">
+            <?=getSelect($cp->getCSec()->getCSec()->vehiculos, "displayName", "deviceID", "vehiculo", ($cp->getCSec()->getCSec()->dev!=null)?$cp->getCSec()->getCSec()->dev->deviceID:null, null, null, true);?>
+                </div>
+        </div>
+        <div class="clearfix">
+            <label>Estado:</label>
+            <div class="input">
+            <?=getSelect($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->isActive:"");?>
+                </div>
+        </div>
+        <div class="clearfix">
+            <div class="input">
+            <input class="btn danger" type="submit" value="Guardar" />
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

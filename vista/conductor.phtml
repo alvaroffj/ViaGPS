@@ -1,0 +1,35 @@
+<?php
+?>
+<script src="js/usuario.js" type="text/javascript"></script>
+<div class="center_content">
+    <h1>Conductores</h1>
+    <div id="local-nav"><a href="?sec=configuracion&ssec=conductor&op=add" class="btn"><img src="img/add.png" border="0"/>Agregar Conductor</a></div>
+    <div class="bloque">
+        <? if(count($cp->getCSec()->getCSec()->usuarios)>0) { ?>
+        <table class="zebra-striped" id="lista">
+            <thead>
+                <tr>
+                    <th class="red">Nombre</th>
+                    <th class="red">Rut</th>
+                    <th class="red">Telefono</th>
+                    <th class="actionCol">Editar</th>
+                    <th class="actionCol">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <? foreach($cp->getCSec()->getCSec()->usuarios as $a) {?>
+                <tr <?=(!$a->isActive)?"class='deleted'":""?>>
+                    <td><?= $a->displayName; ?></td>
+                    <td><?= $a->rut; ?></td>
+                    <td><?= $a->contactPhone; ?></td>
+                    <td class="actionCol"><a href="?sec=configuracion&ssec=conductor&op=mod&id=<?=$a->driverID;?>"><img src="img/page_edit.png" border="0" /></a></td>
+                    <td class="actionCol"><a href="?sec=configuracion&ssec=conductor&do=del&id=<?=$a->driverID;?>"><img src="img/delete.png" border="0" /></a></td>
+                </tr>
+                <? } ?>
+            </tbody>
+        </table>
+        <? } else { ?>
+         <p class="mensaje">No hay Conductores</p>
+        <? } ?>
+    </div>
+</div>
