@@ -25,31 +25,6 @@ class CLog {
         return $this->layout;
     }
 
-    function recuperar() {
-        $usu = $this->usuMP->findByUser($_POST["user"]);
-        if($usu!=null) {
-            include_once '../modelo/class.phpmailer-lite.php';
-            $mail = new PHPMailerLite();
-            $mail->IsMail();
-            $mail->SetFrom("no-reply@jnr.cl", "Mantenedor JNR.cl");
-            $mail->Subject = "Recuperar Clave - Mantenedor JNR.cl";
-            $mail->AddAddress($usu->EMAIL_USUARIO, "Mantenedor JNR.cl");
-            $pass = $this->genPass();
-            $body = "El usuario es <b>".$usu->USER_USUARIO."</b> y su nueva contraseña <b>".$pass."</b><br><br>
-                - Mantenedor JNR.cl";
-            $mail->MsgHTML($body);
-            $success = $mail->Send();
-            if($success) {
-                $this->usuMP->updatePass($usu->ID_USUARIO, $pass);
-                $this->cp->getSession()->salto("?sec=log&e=2");
-            } else {
-                $this->cp->getSession()->salto("?sec=log&op=rec&e=2");
-            }
-        } else {
-            $this->cp->getSession()->salto("?sec=log&op=rec&e=1");
-        }
-    }
-
     function genPass($n=5) {
         $letras = "023456789ABCDEFJHIJKLMNOPQRSTUVWXYZabcdefjhijkmnopqrstuvwxyz";
         $pass = "";
@@ -73,26 +48,37 @@ class CLog {
             $this->cp->getSession()->set("cueBD", $this->cp->cuentaData->NOM_BD);
             $this->cp->getSession()->set("cuePass", $this->cp->cuentaData->PASS_BD);
             $this->cp->getSession()->set("cueBDIP", $this->cp->cuentaData->SERVER_BD_FROM_APP);
-            $this->cp->getSession()->salto("?sec=monitoreo");
+            return true;
         } else {
-            $this->cp->getSession()->salto("?&e=1");
+            return false;
         }
     }
 
     function setDo() {
-        $do = $_GET["do"];
-        switch($do) {
-            case 'in':
-                $this->checkLogin();
-                break;
-            case 'out':
-                $this->logout();
-                break;
-            case 'rec':
-                $this->recuperar();
-                break;
-            default:
-                break;
+        if(isset($_GET["do"])) {
+            $do = $_GET["do"];
+            switch($do) {
+                case 'in':
+                    $res = new stdClass();
+                    if($this->checkLogin()) {
+                        $res->ERROR = 0;
+                        $res->MENSAJE = "Redireccionando";
+                    } else {
+                        $res->ERROR = 1;
+                        $res->MENSAJE = "Usuario o contraseÃ±a incorrectos";
+                    }
+                    echo json_encode($res);
+                    break;
+                case 'out':
+                    $this->logout();
+                    break;
+                case 'rec':
+                    $this->recuperar();
+                    break;
+                default:
+                    break;
+            }
+            die();
         }
     }
 

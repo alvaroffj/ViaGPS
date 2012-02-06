@@ -22,7 +22,7 @@ class Bd {
     }
 
     function conecta() {
-        $this->conex = mysql_connect($this->server, $this->user, $this->pass) or die("En este momento no podemos procesar su peticion, intentelo más tarde");
+        $this->conex = mysql_connect($this->server, $this->user, $this->pass) or die("En este momento no podemos procesar su peticion, intentelo mÃ¡s tarde");
         mysql_select_db($this->bd);
     }
 

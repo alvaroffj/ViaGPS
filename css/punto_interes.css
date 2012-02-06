@@ -1,32 +1,33 @@
 #map {
-    width: 505px;
+    width: 675px;
+    height: 400px;
     float: left;
-    margin-right: 10px;
+    margin-right: 8px;
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.span6 {
+    margin: 0;
 }
 
 #formu {
     float: left;
-    width: 400px;
+    width: 380px;
     margin-left: 0px;
 }
 
 form label {
-    width: 85px;
-    text-align: left;
+    width: 85px !important;
+    text-align: left !important;
 }
 
-form p .button {
+.form-horizontal .controls {
     margin-left: 85px;
 }
 
-form input#dir {
-/*    width: 280px;*/
-}
-
-form div.input {
-    margin-left: 90px;
-}
-
-form div img{
-    vertical-align: top;
+.row {
+    margin-left: 0px;
 }

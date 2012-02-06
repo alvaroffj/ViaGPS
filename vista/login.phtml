@@ -9,15 +9,15 @@ if (isset($_GET["e"])) {
     $tipoMsg = "information";
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>GPSLine | Entrar</title>
-        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+        <script src="js/jquery-1.7.min.js" type="text/javascript"></script>
         <script src="js/jquery.validate.js" type="text/javascript"></script>
         <script type="text/javascript" src="js/login.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="css/login.css" />
         <script type="text/javascript">
           var _gaq = _gaq || [];
@@ -35,28 +35,28 @@ if (isset($_GET["e"])) {
     <body>
         <div id="contenedor">
             <div id="contenido">
-                <div class="logo" align="center"><img src="img/logo.png" border="0" alt="" title="" /></div>
-                <form action="?sec=log&do=in" method="post" id="formu">
-                    <div class="notification <?=$tipoMsg;?> png_bg">
-                        <div><?=$msg;?></div>
+                <div class="logo" align="center"><img src="img/logo_home2.png" border="0" alt="" title="" /></div>
+                <form action="?sec=log&do=in" method="post" id="formu" class="">
+                    <div class="control-group">
+<!--                        <label>Usuario:</label>-->
+                        <div class="controls">
+                            <input class="required" type="text" name="user" value="" placeholder="Usuario"/>
+                        </div>
                     </div>
-                    <p>
-                        <label>Usuario:</label>
-                        <input class="text-input medium-input required" type="text" name="user" value=""/>
-                    </p>
-                    <div class="clear"></div>
-                    <p>
-                        <label>Contrase&ntilde;a:</label>
-                        <input class="text-input medium-input required" type="password" name="pass" value=""/>
-                    </p>
-                    <div class="clear"></div>
-                    <p>
-                        <input class="button" type="submit" value="Entrar" />
-                    </p>
-                    <div class="clear"></div>
+                    <div class="control-group">
+<!--                        <label>Contrase&ntilde;a:</label>-->
+                        <div class="controls">
+                            <input class="required" type="password" name="pass" value="" placeholder="Contrase&ntilde;a"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <p id="msg">&nbsp;</p>
+                            <input class="btn btn-primary btn-large" id="btn" type="submit" value="Entrar" style="width: 235px;"/>
+                        </div>
+                    </div>
                 </form>
             </div>
-            <p align="center">GPSLINE / San Juan #4693, San Joaqu&iacute;n - Santiago - Chile / <br />Tel&eacute;fono (+56 2) 424 78 80 <br />&copy; 2010 GPSLINE - Reservados todos los derechos / Desarrollo: NETMARKET</p>
         </div>
     </body>
 </html>

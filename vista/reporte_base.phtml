@@ -48,7 +48,7 @@ function getTime($arr, $nom) {
 <? if(!isset($_GET["ajax"])) { ?>
 <div class="center_content">
 <? } ?>
-    <h1><?=(isset($_GET["ajax"]))?"Reportes > ":""?><?=htmlentities($cp->getCSec()->tilSec)?></h1>
+    <h2><?=(isset($_GET["ajax"]))?"Reportes > ":""?><?=htmlentities($cp->getCSec()->tilSec)?></h2>
     <div class="mon_botonera">
         <a id="btn_down" class="checkbox tooltip" title="Descargar reporte"><img src="img/save.png" height="20"/></a>
 <!--        <a id="btn_print" class="checkbox tooltip" onClick="showPInteres(); return false;" title="Imprimir reporte"><img src="img/print.png" height="20"/></a>-->
@@ -74,11 +74,7 @@ function getTime($arr, $nom) {
                     <input type="text" name="vel" value="" class="text-input small required" id="vel"/>
                 </div>
             <? } ?>
-            <input type="submit" value="Generar" class="button" id="submit"/>
-<!--            <div class="mon_botonera">
-                <a id="btn_pint" class="checkbox tooltip" onClick="showPInteres(); return false;" title="Descargar reporte"><img src="img/save.png" height="20"/></a>
-                <a id="btn_pint" class="checkbox tooltip" onClick="showPInteres(); return false;" title="Imprimir reporte"><img src="img/print.png" height="20"/></a>
-            </div>-->
+            <input type="submit" value="Generar" class="btn btn-primary" id="submit" style="margin-left: 60px;"/>
         </form>
     </div>
     <div class="<?=(!isset($_GET["ajax"]))?"bloque":""?>" id="reporte">

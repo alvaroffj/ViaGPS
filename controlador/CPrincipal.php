@@ -23,7 +23,7 @@ class CPrincipal {
         $this->cuenta = $this->cuenta[0];
         $this->cuentaMP = new CuentaMP();
         if($this->cuentaMP->isActive($this->cuenta) || $this->cuenta == "dev") {
-            $this->cuenta = ($this->cuenta == "dev")?"starclutch":$this->cuenta;
+            $this->cuenta = ($this->cuenta == "dev")?"rapel":$this->cuenta;
             if ($this->checkLogin()) {
                 $this->setSec();
             } else {

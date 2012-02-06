@@ -72,21 +72,21 @@ class CConductor {
                 case 'add':
                     $this->layout = "vista/conductor_form.phtml";
                     $this->tilSec = "Nuevo Conductor";
-                    $this->vehiculos = $this->deMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, null, true);
                     break;
                 case "mod":
-                    $this->layout = "vista/conductor_form.phtml";
-                    $this->tilSec = "Modificar Conductor";
                     $this->obj = $this->drMP->find($_GET["id"]);
                     $this->dev = $this->deMP->findByDriver($_GET["id"], array("deviceID"));
                     $this->vehiculos = $this->deMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, null, true);
                     if(!$this->obj) $this->cp->getSession()->salto("?sec=configuracion&ssec=conductor");
                     if($this->obj->accountID != $this->cp->getSession()->get("accountID")) $this->cp->getSession()->salto("?sec=configuracion&ssec=conductor");
+                    $this->layout = "vista/conductor_form.phtml";
+                    $this->tilSec = "Modificar Conductor";
                     break;
             }
         } else {
             $this->layout = "vista/conductor.phtml";
             $this->usuarios = $this->drMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            $this->vehiculos = $this->deMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, null, true);
         }
     }
 }

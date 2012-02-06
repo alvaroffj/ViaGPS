@@ -729,6 +729,7 @@ $(document).ready(function(){
     $grupos = $($(".grupo")[0]);
     $reporte = $("#reporte");
     $filtros = $("#filtros");
+    $device = $(".device");
     
     $logAlarma = $lateralRight.find(".scroll");
     $listaDev = $lateralLeft.find(".scroll");
@@ -760,7 +761,10 @@ $(document).ready(function(){
     
     $toggleLeft.toggle(function() {hideLateral(0)}, function() {showLateral(0)});
     $toggleRight.toggle(function() {hideLateral(1)}, function() {showLateral(1)});
-    $grupos.bind("click", function(e) {
+    $device.on("click", "li", function(){
+        setActive($(this).attr("deviceID"));
+    });
+    $grupos.on("click", "a.nomGrupo", function(e) {
         var grupo, hijoId;
         if ($(e.target).hasClass("imgEstado")) {
             grupo = $(e.target).parent().parent().parent();
@@ -849,6 +853,6 @@ $(document).ready(function(){
 //        content: "logo",
 //        style: "dark"
 //    });
-    $(document).mousemove(function(e){mouse = e});
+//    $(document).mousemove(function(e){mouse = e});
     setSec();
 });

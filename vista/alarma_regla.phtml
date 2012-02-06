@@ -1,6 +1,6 @@
 <?
 function getSelect($arr, $til, $nom, $id, $onChange=null, $todos=false, $showTitle=true) {
-    $sel = "<SELECT name='$til' id='$til' onChange=\"$onChange\" class='txt'>";
+    $sel = "<SELECT name='$til' id='$til' onChange=\"$onChange\" class='span2'>";
     if($showTitle) $sel .= "<OPTION>$til</OPTION>";
     if($todos) $sel .= "<OPTION value=0>Todos</OPTION>";
     foreach ($arr as $a) {
@@ -33,14 +33,14 @@ function getDiasForm($arr, $hrs, $min, $al) {
     $til = "dia";
     $r = "";
     $i = 1;
-    $r .= "<ul class='inputs-list'>";
+    $r .= "<ul class='inputs-list unstyled'>";
     foreach($arr as $d) {
         $col = "d".$i;
 //        $r .= "<div class='dia'>";
         if($al->$col == 1) {
-            $r .= "<li><label class='check'><input type='checkbox' name='".$til."_".$d->$id."' value='1' checked><span>".$d->$nom."</span></label>";
+            $r .= "<li><label class='checkbox'><input type='checkbox' name='".$til."_".$d->$id."' value='1' checked>".$d->$nom."</label>";
         } else {
-            $r .= "<li><label class='check'><input type='checkbox' name='".$til."_".$d->$id."' value='1'><span>".$d->$nom."</span></label>";
+            $r .= "<li><label class='checkbox'><input type='checkbox' name='".$til."_".$d->$id."' value='1'>".$d->$nom."</label>";
         }
         $hCol = "h".$i;
         $h = $al->$hCol;
@@ -50,8 +50,8 @@ function getDiasForm($arr, $hrs, $min, $al) {
         } else {
             $h = explode("-", $h);
         }
-        $ini = "Desde: ".getTime($hrs, "hrs_ini_".$d->$id, $h[0], "desactivaMenor(this)", 0)."&nbsp;&nbsp;";
-        $fin = "Hasta: ".getTime($hrs, "hrs_fin_".$d->$id, $h[1], null, $h[0]);
+        $ini = "<label>Desde: </label>".getTime($hrs, "hrs_ini_".$d->$id, $h[0], "desactivaMenor(this)", 0)."&nbsp;&nbsp;";
+        $fin = "<label>Hasta: </label>".getTime($hrs, "hrs_fin_".$d->$id, $h[1], null, $h[0]);
         $r .= $ini;
         $r .= $fin;
         $r .= "</li>";
@@ -64,7 +64,7 @@ function getDiasForm($arr, $hrs, $min, $al) {
 }
 
 function getTime($arr, $nom, $selT = null, $onChange = null, $desacMenor = 0) {
-    $sel = "<SELECT name='$nom' id='$nom' class='span2' onChange=\"" . $onChange . "\">";
+    $sel = "<SELECT name='$nom' id='$nom' class='span1' onChange=\"" . $onChange . "\">";
     foreach($arr as $a) {
         if($selT == $a) $seld = "selected";
         else $seld = "";
@@ -115,74 +115,69 @@ if(isset($_GET["e"])) {
 ?>
 <!--<link rel="stylesheet" type="text/css" href="css/form.css" />-->
 <script src="js/alerta.js" type="text/javascript"></script>
-<div class="center_content">
-    <div id="top-nav">
-        <ul>
-            <li><a href="?sec=configuracion&ssec=alarma">Volver</a></li>
-        </ul>
+<div  class="container" style="padding-top:80px;">
+    <div class="page-header">
+        <h1>Alarma: <?= $cp->getCSec()->getCSec()->alerta->NOM_ALERTA ?></h1>
+        <a href="?sec=configuracion&ssec=alarma" class="btn pull-right"><i class="icon-arrow-left"></i>Volver</a>
     </div>
-    <h1>Alarma: <?= $cp->getCSec()->getCSec()->alerta->NOM_ALERTA ?></h1>
+    <h2>Informaci&oacute;n General</h2>
     <div class="alert-message <?=$tipoMsg;?>">
         <p><?=$msg;?></p>
     </div>
-    <div class="bloque">
-        <h2>Informaci&oacute;n General</h2>
-        <form action="?sec=configuracion&ssec=alarma&do=<?=$cp->getCSec()->getCSec()->op?>" method="post" name="formu" id="formu">
-            <div class="clearfix">
+    <div class="well">
+        <form action="?sec=configuracion&ssec=alarma&do=<?=$cp->getCSec()->getCSec()->op?>" method="post" name="formu" id="formu" class="form-horizontal">
+            <div class="control-group">
                 <label>Nombre:</label>
-                <div class="input">
+                <div class="controls">
                 <input class="text-input medium-input required" type="text" name="nom" value="<?= ($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->NOM_ALERTA:""; ?>"/>
                 <input type="hidden" name="id" value="<?=($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->ID_ALERTA:""?>"/>
                 <input type="hidden" name="accountID" value="<?=$cp->getSession()->get("accountID")?>"/>
                 </div>
             </div>
-            <div class="clearfix">
+            <div class="control-group">
                 <label>Dias de cobertura:</label>
-                <div class="input">
+                <div class="controls">
                 <?//=getCheckBox($cp->getCSec()->getCSec()->dias, "dia", "dia", "id", $cp->getCSec()->getCSec()->alerta);?>
                 <?=getDiasForm($cp->getCSec()->getCSec()->dias, $cp->getCSec()->getCSec()->hrs, $cp->getCSec()->getCSec()->min, $cp->getCSec()->getCSec()->alerta);?>
                 </div>
             </div>
-            <div class="clearfix">
+            <div class="control-group">
                 <label>Estado:</label>
-                <div class="input">
+                <div class="controls">
                 <?=getSelect2($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->ESTADO_ALERTA:"");?>
                     </div>
             </div>
-            <div class="clearfix">
-                <div class="input">
-                <input class="btn danger" type="submit" value="Guardar" />
+            <div class="control-group">
+                <div class="controls">
+                <input class="btn btn-primary" type="submit" value="Guardar" />
                 </div>
             </div>
         </form>
     </div>
     <div style="display:none;">
-        <div id="val_1" style="display:inline;"><input type="text" name="valor" value="" class="text-input required"/><label>Km/h</label></div>
-        <div id="val_2" style="display:none;"><input type="text" name="valor" value="" class="text-input required"/><label>Min.</label></div>
+        <div id="val_1" style="display:inline;"><input type="text" name="valor" value="" class="span1 required"/><label>Km/h</label></div>
+        <div id="val_2" style="display:none;"><input type="text" name="valor" value="" class="span1 required"/><label>Min.</label></div>
         <div id="val_3" style="display:none;"><?= getSelect($cp->getCSec()->getCSec()->polygons, "valor", "NOM_POLIGONO", "ID_POLIGONO", null, true, false); ?></div>
         <div id="val_4" style="display:none;"><?= getSelect($cp->getCSec()->getCSec()->polylines, "valor", "NOM_POLIGONO", "ID_POLIGONO", null, true, false); ?></div>
         <div id="val_5" style="display:none;"><?= getSelect($cp->getCSec()->getCSec()->puntos, "valor", "name", "id", null, true, false); ?></div>
     </div>
-    <div class="bloque">
-        <h2>Reglas</h2>
-        <form name="alerta" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addRegla" class="inline">
+    <h2>Reglas</h2>
+    <div class="well">
+        <form name="alerta" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addRegla" class="form-inline pull-right">
             <input type="hidden" name="idAlerta" value="<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"/>
             <label>Nueva regla: </label><?= getSelect($cp->getCSec()->getCSec()->tipo_regla, "Tipo", "TIPO_REGLA", "ID_TIPO_REGLA", "setNext(this)"); ?><?= getSelect($cp->getCSec()->getCSec()->parametro, "Parametro", "NOM_PARAMETRO", "ID_PARAMETRO", "setValor(this);"); ?><?= getSelect($cp->getCSec()->getCSec()->operador, "Operador", "NOM_OPERADOR", "ID_OPERADOR"); ?>
             <div id="valor" style="display:inline"></div>
-            <input type="submit" value="Agregar" class="btn danger"/>
+            <input type="submit" value="Agregar" class="btn btn-primary"/>
         </form>
-<!--        <pre>
-            <?print_r($cp->getCSec()->getCSec()->reglas)?>
-        </pre>-->
         <? if(count($cp->getCSec()->getCSec()->reglas)>0) { ?>
-        <table class="zebra-striped" id="reglas">
+        <table class="table table-striped table-bordered" id="reglas">
             <thead>
                 <tr>
                     <th class="red">Tipo</th>
                     <th class="red">Parametro</th>
                     <th class="red">Operador</th>
                     <th class="red">Valor</th>
-                    <th class="actionCol">Eliminar</th>
+                    <th class="actionCol">Acci&oacute;n</th>
                 </tr>
             </thead>
             <tbody>
@@ -241,7 +236,7 @@ if(isset($_GET["e"])) {
                             }
                         }
                         ?></td>
-                    <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delRegla&id_regla=<?= $a->ID_REGLA; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"><img src="img/delete.png" border="0" title="Eliminar"/></a></td>
+                    <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delRegla&id_regla=<?= $a->ID_REGLA; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>" class="tp" title="Eliminar regla"><i class="icon-remove"></i></a></td>
                 </tr>
                 <? } ?>
                 </tbody>
@@ -250,21 +245,21 @@ if(isset($_GET["e"])) {
                 <p class="mensaje">No hay reglas en esta alarma</p>
             <? } ?>
         </div>
-        <div class="bloque">
-            <h2>Veh&iacute;culos a monitorear</h2>
-            <form name="device" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addDevice" class="inline">
+        <h2>Veh&iacute;culos a monitorear</h2>
+        <div class="well">
+            <form name="device" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addDevice" class="form-inline pull-right">
                 <input type="hidden" name="idAlerta" value="<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"/>
                 <label>Grupo: </label><?= getSelect($cp->getCSec()->getCSec()->grupos, "Grupo", "displayName", "groupID", "getDevices(this, 'Vehiculo');"); ?>
                 <label>Vehiculo: </label><?= getSelect($cp->getCSec()->getCSec()->devices, "Vehiculo", "licensePlate", "deviceID"); ?>
-                <input type="submit" value="Monitorear" class="btn danger"/>
+                <input type="submit" value="Monitorear" class="btn btn-primary"/>
             </form>
             <? if(count($cp->getCSec()->getCSec()->alerta_device)>0) { ?>
-            <table class="zebra-striped" id="vehiculos">
+            <table class="table table-striped table-bordered" id="vehiculos">
                 <thead>
                     <tr>
                         <th class="red">Nombre</th>
                         <th class="red">Patente</th>
-                        <th class="actionCol">Eliminar</th>
+                        <th class="actionCol">Acci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -272,7 +267,7 @@ if(isset($_GET["e"])) {
                         <tr>
                             <td align="center"><?= $a->displayName; ?></td>
                             <td align="center"><?= $a->licensePlate; ?></td>
-                            <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delDevice&id_device=<?= $a->ID_ALERTA_DEVICE; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"><img src="img/delete.png" border="0" title="Eliminar"/></a></td>
+                            <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delDevice&id_device=<?= $a->ID_ALERTA_DEVICE; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>" class="tp" title="Eliminar veh&iacute;culo"><i class="icon-remove"></i></a></td>
                         </tr>
                     <? } ?>
                 </tbody>
@@ -281,21 +276,21 @@ if(isset($_GET["e"])) {
             <p class="mensaje">No hay vehiculos asociados</p>
             <? } ?>
         </div>
-        <div class="bloque">
-            <h2>Acciones</h2>
-            <form name="accion" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addAccion" class="inline">
+        <h2>Acciones</h2>
+        <div class="well">
+            <form name="accion" method="post" id="formu" action="?sec=configuracion&ssec=alarma&do=addAccion" class="form-inline pull-right">
                 <input type="hidden" name="idAlerta" value="<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"/>
                 <label>Enviar: </label><?= getSelect($cp->getCSec()->getCSec()->tipo_accion, "Accion", "TIPO_ACCION", "ID_TIPO_ACCION"); ?><label> a: </label>
-                <input type="text" name="dest" value="" class="text-input required"/>
-                <input type="submit" value="Agregar" class="btn danger"/>
+                <input type="text" name="dest" value="" class="span2 required"/>
+                <input type="submit" value="Agregar" class="btn btn-primary"/>
             </form>
             <? if(count($cp->getCSec()->getCSec()->acciones)>0) { ?>
-            <table class="zebra-striped" id="acciones">
+            <table class="table table-striped table-bordered" id="acciones">
                 <thead>
                     <tr>
                         <th class="red">Accion</th>
                         <th class="red">Destinatario</th>
-                        <th class="actionCol">Eliminar</th>
+                        <th class="actionCol">Acci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -303,7 +298,7 @@ if(isset($_GET["e"])) {
                         <tr>
                             <td align="center"><?= $a->TIPO_ACCION; ?></td>
                             <td align="center"><?= $a->DEST_ACCION; ?></td>
-                            <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delAccion&id_accion=<?= $a->ID_ACCION; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>"><img src="img/delete.png" border="0" title="Eliminar"/></a></td>
+                            <td class="actionCol"><a href="?sec=configuracion&ssec=alarma&do=delAccion&id_accion=<?= $a->ID_ACCION; ?>&id_alerta=<?= $cp->getCSec()->getCSec()->alerta->ID_ALERTA; ?>" class="tp" title="Eliminar acci&oacute;n"><i class="icon-remove"></i></a></td>
                         </tr>
                     <? } ?>
                 </tbody>

@@ -1,21 +1,24 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    background-color: #ededed;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #333;
+    background: url('../img/dark_leather.png');
+    margin: 0;
 }
 
 #contenedor {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 440px;
+    width: 300px;
     height: 370px;
-    margin: -210px 0 0 -230px;
+    text-align: center;
+    margin: 0 auto 0 auto;
 }
 
 #contenedor p{
     font-size: 12px;
     color: #333;
+    margin-top: -5px;
+    margin-bottom: 10px;
 }
 
 #contenido {
@@ -24,16 +27,14 @@ body {
     background-color: #fff;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;*/
-    border: 1px solid #ccc;
+*/    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
     padding: 10px;
     margin-bottom: 15px;
-    background: #ffffff; /* old browsers */
-    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
-    -webkit-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
-    -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+    background: #F7F7F7; /* old browsers */
+    text-align: center;
 }
 
 form {
@@ -73,14 +74,15 @@ form p img {
 }
 
 
-form input.text-input,
+form input,
 form select,
 form textarea,
 form .wysiwyg {
-    padding: 6px;
+    padding: 12px;
     border: 1px solid #d5d5d5;
-    font-size: 13px;
+    font-size: 16px;
     color: #333;
+    text-align: center;
 }
 
 form .medium-input {
@@ -149,7 +151,6 @@ form p .button {
 /*    background: #ffcece url('../images/icons/cross_circle.png');*/
     border-color: #df8f8f;
     color: #665252;
-    background-color: #ffcece;
 }
 
 .notification div {

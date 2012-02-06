@@ -77,6 +77,8 @@ function setSec() {
 }
 
 $(document).ready(function() {
+    $(".tp").tooltip();
+    $('.dropdown-toggle').dropdown()
     $resize = $("#resize");
     $mainNav[0] = $($("#main-nav").children()[0]);
     $mainNav[1] = $($("#main-nav").children()[1]);
