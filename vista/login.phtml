@@ -23,7 +23,8 @@ if (isset($_GET["e"])) {
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-29049761-1']);
             _gaq.push(['_setDomainName', 'viagps.cl']);
-            _gaq.push(['_trackPageview']);
+            _gaq.push(['_setAllowHash', false]);
+            _gaq.push(['_trackPageview']); 
 
             (function() {
                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
