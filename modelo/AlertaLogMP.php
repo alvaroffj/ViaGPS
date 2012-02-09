@@ -45,8 +45,10 @@ class AlertaLogMP {
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         $arr = array();
-        while($row = mysql_fetch_object($res)) {
-            $arr[] = $row;
+        if($res) {
+            while($row = mysql_fetch_object($res)) {
+                $arr[] = $row;
+            }
         }
         return $arr;
     }

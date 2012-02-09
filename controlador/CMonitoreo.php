@@ -181,6 +181,7 @@ class CMonitoreo {
                 default:
                     break;
             }
+            die();
         }
     }
 

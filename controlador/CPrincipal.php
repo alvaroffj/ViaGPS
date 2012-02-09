@@ -72,7 +72,7 @@ class CPrincipal {
     }
 
     function setSec() {
-        $this->sec = $_GET["sec"];
+        $this->sec = (isset($_GET["sec"]))?$_GET["sec"]:"monitoreo";
         $this->showLayout = true;
         $this->thisLayout = true;
         switch($this->sec) {
@@ -91,11 +91,6 @@ class CPrincipal {
             case 'reporte':
                 include_once 'controlador/CReporte.php';
                 $this->_CSec = new CReporte($this);
-                break;
-            default:
-                $this->sec = "monitoreo";
-                include_once 'CMonitoreo.php';
-                $this->_CSec = new CMonitoreo($this);
                 break;
         }
     }

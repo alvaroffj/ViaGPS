@@ -718,7 +718,7 @@ $(document).ready(function(){
     };
 
     var deviceList = new List('devices', options);
-    $("label", $("#devFiltro")).inFieldLabels();
+//    $("label", $("#devFiltro")).inFieldLabels();
     $map_canvas = $("#map_canvas");
     $lateralLeft = $("#left-sidebar");
     $lateralRight = $("#right-sidebar");
