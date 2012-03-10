@@ -41,14 +41,13 @@ if(isset($_GET["e"])) {
     </div>
     <h2>Informaci&oacute;n General</h2>
     <div class="alert-message <?=$tipoMsg;?>">
-<!--        <a class="close" href="#">�</a>-->
         <p><?=$msg;?></p>
     </div>
     <div class="well">
         <form action="?sec=configuracion&ssec=vehiculo&do=<?=$cp->getCSec()->getCSec()->op?>" method="post" name="formu" id="formu" class="form-horizontal">
             <fieldset>
             <div class="control-group">
-                <label for="nom">Nombre:</label>
+                <label class="control-label" for="nom">Nombre:</label>
                 <div class="controls">
                 <input id="nom" class="span5 required" type="text" name="nom" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->displayName:""?>"/>
                 <input type="hidden" name="id" value="<?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->groupID:""?>"/>
@@ -56,13 +55,13 @@ if(isset($_GET["e"])) {
                 </div>
             </div>
             <div class="control-group">
-                <label for="desc">Descripci&oacute;n:</label>
+                <label class="control-label" for="desc">Descripci&oacute;n:</label>
                 <div class="controls">
                 <textarea name="desc" id="desc" class="span5"><?=($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->description:""?></textarea>
                 </div>
             </div>
             <div class="control-group">
-                <label for="estado">Estado:</label>
+                <label class="control-label" for="estado">Estado:</label>
                 <div class="controls">
                 <?=getSelect($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->isActive:"");?>
                 </div>

@@ -127,7 +127,7 @@ if(isset($_GET["e"])) {
     <div class="well">
         <form action="?sec=configuracion&ssec=alarma&do=<?=$cp->getCSec()->getCSec()->op?>" method="post" name="formu" id="formu" class="form-horizontal">
             <div class="control-group">
-                <label>Nombre:</label>
+                <label class="control-label">Nombre:</label>
                 <div class="controls">
                 <input class="text-input medium-input required" type="text" name="nom" value="<?= ($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->NOM_ALERTA:""; ?>"/>
                 <input type="hidden" name="id" value="<?=($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->ID_ALERTA:""?>"/>
@@ -135,14 +135,14 @@ if(isset($_GET["e"])) {
                 </div>
             </div>
             <div class="control-group">
-                <label>Dias de cobertura:</label>
+                <label class="control-label">Dias de cobertura:</label>
                 <div class="controls">
                 <?//=getCheckBox($cp->getCSec()->getCSec()->dias, "dia", "dia", "id", $cp->getCSec()->getCSec()->alerta);?>
                 <?=getDiasForm($cp->getCSec()->getCSec()->dias, $cp->getCSec()->getCSec()->hrs, $cp->getCSec()->getCSec()->min, $cp->getCSec()->getCSec()->alerta);?>
                 </div>
             </div>
             <div class="control-group">
-                <label>Estado:</label>
+                <label class="control-label">Estado:</label>
                 <div class="controls">
                 <?=getSelect2($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->ESTADO_ALERTA:"");?>
                     </div>
