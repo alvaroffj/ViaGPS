@@ -334,6 +334,7 @@ a.nomGrupo {
     font-weight: normal;
     color: #666666;
     vertical-align: middle;
+    line-height: 0px;
 }
 
 #left-sidebar ul.device li.active #info > span{ 

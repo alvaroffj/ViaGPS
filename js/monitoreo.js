@@ -374,10 +374,7 @@ function showDevices() {
                 
                 actualizaFila(dev);
                 var myLatLng = new google.maps.LatLng(dev.latitude, dev.longitude)
-                if(activeIndex == -1 && i==0) {
-                    activeIndex = dev.deviceID;
-//                    setActive(activeIndex);
-                }
+                
 //                console.log(dev);
                 
                 var marker = new google.maps.Marker({
@@ -393,10 +390,13 @@ function showDevices() {
                 device[i] = marker;
                 infoDevice[i] = dev;
                 indexDevice[i] = dev.deviceID;
+                if(activeIndex == -1 && i==0) {
+                    activeIndex = dev.deviceID;
+                    setActive(activeIndex);
+                }
                 if(activeIndex > 0 && dev.deviceID == activeIndex) {
                     map.panTo(myLatLng);
                     updateActive(dev);
-//                    setActive(activeIndex);
                 }
             }
             $(device).each(function(i, marker) {
@@ -415,7 +415,6 @@ function showDevices() {
 }
 
 function actualizaFila(res) {
-//    console.log(res);
     $(".dev_"+res.deviceID).each(function() {
         var dev = $(this);
         var img = [];
@@ -424,7 +423,6 @@ function actualizaFila(res) {
         var $vel = dev.find("#velocidad");
         $vel.html(Math.round(res.speedKPH*1));
         $vel.attr("title", Math.round(res.speedKPH*1)+" (Km/Hr)");
-//        if(dev.hasClass("active")) console.log("activo: "+dev);
         dev.find("#fecha").html("<b>Fecha: </b>"+res.fecha);
         dev.find("#estado").html(img[res.encendido]);
         
@@ -454,6 +452,11 @@ function actualizaFila(res) {
                             $sen.html(res[senAux[i].COLUMNA_SENSOR]);
                             $sen.attr("title", res[senAux[i].COLUMNA_SENSOR]+" ("+senAux[i].UNIDAD_SENSOR+")");
                             break;
+                        case "4":
+                            $sen = dev.find("#S"+senAux[i].ID_SENSOR);
+                            $sen.html(res[senAux[i].COLUMNA_SENSOR]);
+                            $sen.attr("title", res[senAux[i].COLUMNA_SENSOR]+" ("+senAux[i].UNIDAD_SENSOR+")");
+                            break;
                     }
                 }
             }
@@ -462,15 +465,12 @@ function actualizaFila(res) {
 }
 
 function setActive(index) {
-//    alert(index);
     var nDev = device.length;
     var i=0;
     while(i<nDev && indexDevice[i]!=index) {
         i++;
     }
     delNewPunto();
-//    console.log("activeIndex: "+index);
-//    console.log("preActive: "+preActive);
     if(index != preActive) {
         map.panTo(device[i].getPosition());
         updateActive(infoDevice[i]);
@@ -537,6 +537,9 @@ function updateActive(res) {
                                 act_dev.find("#S"+senAux[i].ID_SENSOR).html("<b>"+senAux[i].NOM_SENSOR+": </b>"+res[senAux[i].COLUMNA_SENSOR]+" <span class='uni_med'>("+senAux[i].UNIDAD_SENSOR+")</span>").show();
                                 break;
                             case "3":
+                                act_dev.find("#S"+senAux[i].ID_SENSOR).html("<b>"+senAux[i].NOM_SENSOR+": </b>"+res[senAux[i].COLUMNA_SENSOR]+" <span class='uni_med'>("+senAux[i].UNIDAD_SENSOR+")</span>").show();
+                                break;
+                            case "4":
                                 act_dev.find("#S"+senAux[i].ID_SENSOR).html("<b>"+senAux[i].NOM_SENSOR+": </b>"+res[senAux[i].COLUMNA_SENSOR]+" <span class='uni_med'>("+senAux[i].UNIDAD_SENSOR+")</span>").show();
                                 break;
                         }

@@ -73,7 +73,8 @@ class EventDataMP {
                 AND DL.deviceID = D.deviceID
                 AND LE.deviceID = D.deviceID
                 AND D.isActive = 1
-                GROUP BY DL.DeviceID";
+                GROUP BY DL.DeviceID
+                ORDER BY D.deviceID ASC";
         $res = $this->_bd->sql($sql);
         $arr = array();
         while($row = mysql_fetch_object($res)) {
@@ -96,7 +97,8 @@ class EventDataMP {
                 AND LE.deviceID = D.deviceID
                 AND D.isActive = 1
                 AND D.driverID = DR.driverID
-                GROUP BY DL.DeviceID";
+                GROUP BY DL.DeviceID
+                ORDER BY D.deviceID ASC";
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         $arr = array();

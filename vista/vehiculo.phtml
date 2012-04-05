@@ -43,7 +43,8 @@
     </div>
     <div class="bloque">
         <h2>Veh&iacute;culos</h2>
-        <? if(count($cp->getCSec()->getCSec()->device)>0) { ?>
+        <?$nDev = count($cp->getCSec()->getCSec()->device);?>
+        <? if($nDev>0) { ?>
         <table class="table table-bordered table-striped" id="vehiculos">
             <thead>
                 <tr>
@@ -58,8 +59,8 @@
                 </tr>
             </thead>
             <tbody>
-                <? $i=0; ?>
-                <? foreach($cp->getCSec()->getCSec()->device as $a) {?>
+                <? for($i=0; $i<$nDev; $i++) {?>
+                <? $a = $cp->getCSec()->getCSec()->device[$i]; ?>
                 <tr>
                     <td class="editable medium"><span class="edit" id="<?=$a->deviceID;?>"><?= $a->displayName; ?></span></td>
                     <td align="center"><?= $a->licensePlate; ?></td>
@@ -70,7 +71,7 @@
 <!--                    <td align="center"><a href="?sec=vehiculo&op=mod&id=<?=$a->deviceID;?>"><img src="img/page_edit.png" border="0" /></a></td>
                     <td align="center"><a href="?sec=vehiculo&op=del&id=<?=$a->deviceID;?>"><img src="img/delete.png" border="0" /></a></td>-->
                 </tr>
-                <? $i++; ?>
+                
                 <? } ?>
             </tbody>
         </table>
@@ -81,7 +82,7 @@
 </div>
 <script>
     $(".driveEdit").editable(function(value, settings){
-        console.log(this);
+//        console.log(this);
         dri = $(this);
         json = $.parseJSON(settings.data);
         if(dri.attr("id") != "dr_"+value) {
