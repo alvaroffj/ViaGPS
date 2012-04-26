@@ -75,7 +75,6 @@ function initialize() {
         zoom: 11,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        navigationControl: true,
         navigationControlOptions: {
             style: google.maps.NavigationControlStyle.ZOOM_PAN,
             position: google.maps.ControlPosition.TOP_RIGHT

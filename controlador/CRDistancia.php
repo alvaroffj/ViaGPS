@@ -72,8 +72,8 @@ class CRDistancia {
 
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Km Recorridos')
-                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Período de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Vehículo", "Patente", "Km Recorridos");
+                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
+                        $columnas = array("Fecha", "Vehiculo", "Patente", "Km Recorridos");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -149,7 +149,7 @@ class CRDistancia {
                     if($rep!=null) {
                         $txt = "<h2>Reporte</h2>";
                         $txt .= $this->getGrafico($rep, $nombre, $license, $dev, $_POST["fecha_ini"]);
-                        $txt .= "<table border='0' cellspacing='0' cellpadding='0' width='100%' class='tablarojo' id='reporte'>
+                        $txt .= "<table border='0' cellspacing='0' cellpadding='0' width='100%' class='table table-striped'>
                             <thead>
                                 <tr>
                                     <th align='center' width='100'>Fecha</th>
@@ -168,7 +168,15 @@ class CRDistancia {
                                 $txt .= "<td align='center'>".$nombre[$auxDevId]."</td>";
                                 $txt .= "<td align='center'>".$license[$auxDevId]."</td>";
                                 $txt .= "<td align='center'>".$kmTotal."</td>";
-                                $txt .= "</tr>";
+                                $txt .= "</tr></tbody></table><table border='0' cellspacing='0' cellpadding='0' width='100%' class='table table-striped' id='reporte'><thead>
+                                <tr>
+                                    <th align='center' width='100'>Fecha</th>
+                                    <th align='center' width='100'>Veh&iacute;culo</th>
+                                    <th align='center' width='100'>Patente</th>
+                                    <th align='center' width='100'>Distancia (Km)</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
                                 $kmTotal = $km;
                                 $auxDevId = $r->deviceID;
                             } else {

@@ -74,8 +74,8 @@ class CRConsumo {
 
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Consumo')
-                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Período de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Vehículo", "Patente", "Consumo estimado (Lt)");
+                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
+                        $columnas = array("Fecha", "Vehiculo", "Patente", "Consumo estimado (Lt)");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -156,7 +156,7 @@ class CRConsumo {
                         $ltTotal = 0;
                         $txt = "<h2>Reporte</h2>";
                         $txt .= $this->getGrafico($rep, $nombre, $license, $dev, $kmPLitro, $_POST["fecha_ini"]);
-                        $txt .= "<table border='0' cellspacing='0' cellpadding='0' width='100%' class='tablarojo' id='reporte'>
+                        $txt .= "<table border='0' cellspacing='0' cellpadding='0' width='100%' class='table table-striped' id='reporte'>
                             <thead>
                                 <tr>
                                     <th align='center' width='100'>Fecha</th>
@@ -175,7 +175,15 @@ class CRConsumo {
                                 $txt .= "<td align='center'>".$nombre[$auxDevId]."</td>";
                                 $txt .= "<td align='center'>".$license[$auxDevId]."</td>";
                                 $txt .= "<td align='center'>".$ltTotal."</td>";
-                                $txt .= "</tr>";
+                                $txt .= "</tr></tbody></table><table border='0' cellspacing='0' cellpadding='0' width='100%' class='table table-striped' id='reporte'><thead>
+                                <tr>
+                                    <th align='center' width='100'>Fecha</th>
+                                    <th align='center' width='100'>Veh&iacute;culo</th>
+                                    <th align='center' width='100'>Patente</th>
+                                    <th align='center' width='100'>Consumo estimado (Lt)</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
                                 $ltTotal = $lt;
                                 $auxDevId = $r->deviceID;
                             } else {

@@ -78,8 +78,8 @@ class CAuditoria {
 
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Auditoria')
-                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Período de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Vehículo", "Patente", "Fecha", "Latitud", "Longitud", "Velocidad", "Km. Recorridos", "Encendido");
+                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
+                        $columnas = array("Vehiculo", "Patente", "Fecha", "Latitud", "Longitud", "Velocidad", "Km. Recorridos", "Encendido");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -189,7 +189,7 @@ class CAuditoria {
     function setOp() {
         if (isset($_GET["op"])) {
         } else {
-            $this->layout = "vista/reporte_base.phtml";
+            $this->layout = "vista/reporte_auditoria.phtml";
             $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
             $this->min = range(0,59,15);
             $this->hrs = range(0,23,1);

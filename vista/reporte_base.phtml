@@ -77,7 +77,7 @@ function getTime($arr, $nom) {
             <input type="submit" value="Generar" class="btn btn-primary" id="submit" style="margin-left: 60px;"/>
         </form>
     </div>
-    <div class="<?=(!isset($_GET["ajax"]))?"bloque":""?>" id="reporte">
+    <div class="<?=(!isset($_GET["ajax"]))?"bloque":"container"?>" id="reporte">
         <p class="mensaje">Complete los campos para generar el reporte</p>
     </div>
 <? if(!isset($_GET["ajax"])) { ?>

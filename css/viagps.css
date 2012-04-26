@@ -224,7 +224,7 @@ input.error {
 
 div.scroll {
     overflow: auto;
-    margin-left: -10px;
+    margin-left: -5px;
 }
 
 
@@ -429,6 +429,7 @@ a.nomGrupo {
 
 #reporte {
     overflow: auto;
+/*    padding-top: 50px;*/
 }
 
 .mon_botonera {
@@ -917,4 +918,8 @@ form#devFiltro input {
     color: #999;
     text-decoration: line-through;
     font-style: italic;
+}
+
+.table .total {
+    font-weight: bold;
 }

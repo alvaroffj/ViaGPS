@@ -77,7 +77,7 @@ function reset() {
     if(clMk) clMk.clearMarkers();
     if(mgMk) mgMk.clearMarkers();
     if(poligono) poligono.setMap(null);
-    if($reporte) $reporte.html("");
+//    if($reporte) $reporte.html("");
 }
 
 function showReporteJSON(reporte) {
@@ -181,9 +181,9 @@ function showReporteJSON(reporte) {
 }
 
 function showReporteTXT(txt) {
-    console.log("show txt");
-    console.log($reporte);
-    console.log(txt);
+//    console.log("show txt");
+//    console.log($reporte);
+//    console.log(txt);
     $reporte.html(txt);
     $reporte.css({
         "margin-left":$lateralLeft.width()+20+"px",
@@ -216,8 +216,8 @@ $(document).ready(function() {
     $reporte = $("#reporte");
     $filtros = $("#filtros");
     $btn_pint = $("#btn_pint");
-    if(reportes[reporteSel].showMapa)
-        $reporte.height($(window).height()-100-$filtros.height());
+//    if(reportes[reporteSel].showMapa)
+//        $reporte.height($(window).height()-100-$filtros.height());
 //    console.log($filtros.height());
 //    console.log($reporte.height());
     fecha = new Date();
