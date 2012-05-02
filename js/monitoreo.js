@@ -490,7 +490,7 @@ function setActive(index) {
 
 function desactivaTodos() {
     if(preActive != -2) {
-        console.log("desactiva todos");
+//        console.log("desactiva todos");
         activeIndex = -2;
         act_dev.fadeOut();
         $(".dev_"+preActive).each(function(i, elem){
@@ -558,7 +558,7 @@ function hideLateral(n) {
         w = $lateralLeft.width()+10;
         $lateralLeft.animate({'left':'-'+w+'px'}, 500, function() {
             if($reporte && reporteSel>-1  && !reportes[reporteSel].showMapa) {
-                console.log("izq");
+//                console.log("izq");
                 $reporte.css({
                     "margin-left":($lateralLeft.width()+20+$lateralLeft.position().left)+"px",
                     "margin-right":(5-($lateralRight.position().left-$(window).width()))+"px"
@@ -571,7 +571,7 @@ function hideLateral(n) {
         w = $lateralRight.width()+10;
         $lateralRight.animate({'right':'-'+w+'px'}, 500, function() {
             if($reporte && reporteSel>-1 && !reportes[reporteSel].showMapa) {
-                console.log("der");
+//                console.log("der");
                 $reporte.css({
                     "margin-left":($lateralLeft.width()+20+$lateralLeft.position().left)+"px",
                     "margin-right":(5-($lateralRight.position().left-$(window).width()))+"px"

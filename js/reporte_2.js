@@ -181,9 +181,9 @@ function showReporteJSON(reporte) {
 }
 
 function showReporteTXT(txt) {
-    console.log("show txt");
-    console.log($reporte);
-    console.log(txt);
+//    console.log("show txt");
+//    console.log($reporte);
+//    console.log(txt);
     $reporte.html(txt);
     $reporte.css({
         "margin-left":$lateralLeft.width()+20+"px",

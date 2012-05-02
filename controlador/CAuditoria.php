@@ -189,7 +189,7 @@ class CAuditoria {
     function setOp() {
         if (isset($_GET["op"])) {
         } else {
-            $this->layout = "vista/reporte_auditoria.phtml";
+            $this->layout = "vista/reporte_base.phtml";
             $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
             $this->min = range(0,59,15);
             $this->hrs = range(0,23,1);
