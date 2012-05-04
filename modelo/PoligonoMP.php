@@ -38,8 +38,9 @@ class POLIGONOMP {
         $data["estado"] = $this->_bd->limpia($data["estado"]);
         $data["tipo"] = $this->_bd->limpia($data["tipo"]);
         $data["accountID"] = $this->_bd->limpia($data["accountID"]);
+        $data["userID"] = $this->_bd->limpia($data["userID"]);
         $data["nPuntos"] = $this->_bd->limpia($data["nPuntos"]);
-        $sql = "INSERT INTO POLIGONO (ID_TIPO_POLIGONO, accountID, NOM_POLIGONO, ESTADO_POLIGONO) VALUES (".$data["tipo"].", '".$data["accountID"]."', '".$data["nom"]."', ".$data["estado"].")";
+        $sql = "INSERT INTO POLIGONO (ID_TIPO_POLIGONO, accountID, userID, NOM_POLIGONO, ESTADO_POLIGONO) VALUES (".$data["tipo"].", '".$data["accountID"]."', '".$data["userID"]."', '".$data["nom"]."', ".$data["estado"].")";
         $res = $this->_bd->sql($sql);
         $idPol = mysql_insert_id();
 
@@ -87,9 +88,23 @@ class POLIGONOMP {
         return $this->_bd->sql($sql);
     }
 
-    function fetchByCuenta($idCuenta) {
+    function fetchByCuenta($idCuenta, $all = true) {
         $idCuenta = $this->_bd->limpia($idCuenta);
-        $sql = "SELECT * FROM POLIGONO WHERE accountID = $idCuenta";
+        if(!$all) $q = "AND ESTADO_POLIGONO = 1";
+        $sql = "SELECT * FROM POLIGONO WHERE accountID = $idCuenta $q";
+//        echo $sql."<br>";
+        $res = $this->_bd->sql($sql);
+        $arr = array();
+        while($row = mysql_fetch_object($res)) {
+            $arr[] = $row;
+        }
+        return $arr;
+    }
+    
+    function fetchByUser($idUs, $all = false) {
+        $idUs = $this->_bd->limpia($idUs);
+        if(!$all) $q = "AND ESTADO_POLIGONO = 1";
+        $sql = "SELECT * FROM POLIGONO WHERE userID = $idUs $q";
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         $arr = array();

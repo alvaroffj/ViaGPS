@@ -40,6 +40,27 @@ class PInteresMP {
         }
         return $arr;
     }
+    
+    function fetchByUser($idUs, $attr=null, $active=true) {
+        $idUs = $this->_bd->limpia($idUs);
+
+        if($attr == null) {
+            $sAttr = "*";
+        } else {
+            $sAttr = implode(",", $attr);
+        }
+
+        if($active) $q = "AND estado_pinteres = 1";
+
+        $sql = "SELECT $sAttr FROM $this->_dbTable WHERE userID = $idUs $q ORDER BY name ASC";
+//        echo $sql."<br>";
+        $res = $this->_bd->sql($sql);
+        $arr = array();
+        while($row = mysql_fetch_object($res)) {
+            $arr[] = $row;
+        }
+        return $arr;
+    }
 
     function find($id, $attr = null) {
         $id = $this->_bd->limpia($id);
@@ -67,10 +88,12 @@ class PInteresMP {
         $data["rad"] = $this->_bd->limpia($data["rad"]);
         $data["estado"] = $this->_bd->limpia($data["estado"]);
         $data["accountID"] = $this->_bd->limpia($data["accountID"]);
+        $data["userID"] = $this->_bd->limpia($data["userID"]);
 
         $sql = "INSERT INTO $this->_dbTable
-                    (latitude, longitude, name, accountid, address, comuna, region, pais, descripcion, radio) VALUES
-                    (".$data["lat"].", ".$data["lon"].", '".$data["nom"]."', ".$data["accountID"].", '".$data["dir"]."', '".$data["com"]."', '".$data["reg"]."', '".$data["pais"]."', '".$data["desc"]."', ".$data["rad"].")";
+                    (latitude, longitude, name, accountid, userID, address, comuna, region, pais, descripcion, radio) VALUES
+                    (".$data["lat"].", ".$data["lon"].", '".$data["nom"]."', ".$data["accountID"].", ".$data["userID"].",'".$data["dir"]."', '".$data["com"]."', '".$data["reg"]."', '".$data["pais"]."', '".$data["desc"]."', ".$data["rad"].")";
+//        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         return mysql_insert_id();
     }

@@ -100,18 +100,18 @@ class CMonitoreo {
                         } else {
                             $delay = 0;
                             $geocode_pending = true;
-                            $urlBase = "http://maps.google.com/maps/api/geocode/xml?";
+                            $urlBase = "http://maps.google.com/maps/api/geocode/json?";
                             while ($geocode_pending) {
-                                $urlRequest = $urlBase . "latlng=$url->LATITUD,$url->LONGITUD&sensor=true&region=CL";
-                                $xml = simplexml_load_file($urlRequest) or die("url not loading");
-                                $status = $xml->status;
+                                $urlRequest = $urlBase . "latlng=$url->LATITUD,$url->LONGITUD&sensor=true&region=CL&language=ES";
+                                $dir = json_decode(file_get_contents($urlRequest));
+                                $status = $dir->status;
                                 if (strcmp($status, "OK") == 0) {
                                     $geocode_pending = false;
-                                    $url->DIRECCION = $xml->result[0]->formatted_address."";
-                                    $n = count($xml->result[0]->address_component);
+                                    $url->DIRECCION = $dir->results[0]->formatted_address."";
+                                    $n = count($dir->results[0]->address_components);
                                     for($i=0; $i<$n; $i++) {
-                                        $d = $xml->result[0]->address_component[$i];
-                                        switch($d->type) {
+                                        $d = $dir->results[0]->address_components[$i];
+                                        switch($d->types[0]) {
                                             case 'administrative_area_level_3': //comuna
                                                 $url->COMUNA = $d->long_name."";
                                                 break;

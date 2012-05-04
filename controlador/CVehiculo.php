@@ -142,9 +142,14 @@ class CVehiculo {
             }
         } else {
             $this->layout = "vista/vehiculo.phtml";
-            $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"), true);
-            $this->device = $this->deMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, null, true);
-            $this->conductores = $this->drMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, false);
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"), true);
+                $this->device = $this->deMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, null, true);
+                $this->conductores = $this->drMP->fetchByCuenta($this->cp->getSession()->get("accountID"), null, false);
+            } else {
+                $this->grupos = $this->dgMP->fetchUserGrupo($this->cp->getSession()->get("userID"));
+                $this->device = $this->deMP->fetchByUser($this->cp->getSession()->get("userID"));
+            }
             foreach($this->conductores as $c) {
                 $arr[$c->driverID] = $c->displayName;
             }

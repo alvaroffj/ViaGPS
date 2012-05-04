@@ -57,34 +57,38 @@
                             <a class="brand" href="http://www.viagps.cl" target="_blank"><img src="img/logo2.png" width="160" style="float: left;margin: -8px 10px 0 0px;"/></a>
                             <div class="nav-collapse">
                                 <ul class="nav">
-                                    <li <?= ($cp->sec == "monitoreo") ? " class='active'" : ""; ?>><a href="?sec=monitoreo">Monitoreo</a></li>
-                                    <? if($cp->sec == "reporte") { ?>
-                                        <li class="active"><a href="?sec=reporte&ssec=auditoria">Reportes</a></li>
-                                    <? } else { ?>
-                                        <li class="dropdown <?= ($cp->sec == "reporte") ? "active" : ""; ?>">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes <b class="caret"></b></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="/#/reporte/auditoria" onClick="setReporte(0);">Auditoria</a></li>
-                                                <li><a href="/#/reporte/alarma" onClick="setReporte(1);">Alarmas</a></li>
-                                                <li><a href="/#/reporte/recorrido" onClick="setReporte(2);">Km. Recorridos</a></li>
-                                                <li><a href="/#/reporte/velocidad" onClick="setReporte(3);">Velocidad</a></li>
-                                                <li><a href="/#/reporte/consumo" onClick="setReporte(4);">Consumo</a></li>
-                                            </ul>
-                                        </li>
+                                    <? if($cp->isAllow("monitoreo")) { ?>
+                                        <li <?= ($cp->sec == "monitoreo") ? " class='active'" : ""; ?>><a href="?sec=monitoreo">Monitoreo</a></li>
                                     <? } ?>
-                                    <? if($cp->isAdmin() || $cp->isSuperAdmin()) { ?>
+                                    <? if($cp->isAllow("reporte")) { ?>
+                                        <? if($cp->sec == "reporte") { ?>
+                                            <li class="active"><a href="?sec=reporte&ssec=auditoria">Reportes</a></li>
+                                        <? } else { ?>
+                                            <li class="dropdown <?= ($cp->sec == "reporte") ? "active" : ""; ?>">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="/#/reporte/auditoria" onClick="setReporte(0);">Auditoria</a></li>
+                                                    <li><a href="/#/reporte/alarma" onClick="setReporte(1);">Alarmas</a></li>
+                                                    <li><a href="/#/reporte/recorrido" onClick="setReporte(2);">Km. Recorridos</a></li>
+                                                    <li><a href="/#/reporte/velocidad" onClick="setReporte(3);">Velocidad</a></li>
+                                                    <li><a href="/#/reporte/consumo" onClick="setReporte(4);">Consumo</a></li>
+                                                </ul>
+                                            </li>
+                                        <? } ?>
+                                    <? } ?>
+                                    <? if($cp->isAllow("configuracion")) { ?>
                                         <? if($cp->sec == "configuracion") { ?>
                                             <li class="active"><a href="?sec=configuracion&ssec=vehiculo">Configuraci&oacute;n</a></li>
                                         <? } else { ?>
                                             <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n <b class="caret"></b></a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="?sec=configuracion&ssec=vehiculo">Veh&iacute;culos</a></li>
-                                                    <li><a href="?sec=configuracion&ssec=conductor">Conductores</a></li>
-                                                    <li><a href="?sec=configuracion&ssec=usuario">Usuarios</a></li>
-                                                    <li><a href="?sec=configuracion&ssec=alarma">Alarmas</a></li>
-                                                    <li><a href="?sec=configuracion&ssec=puntointeres">Ptos. Interes</a></li>
-                                                    <li><a href="?sec=configuracion&ssec=geozona">Geo Zona</a></li>
+                                                    <? if($cp->isAllow("configuracion", "vehiculo")) { ?><li><a href="?sec=configuracion&ssec=vehiculo">Veh&iacute;culos</a></li><? } ?>
+                                                    <? if($cp->isAllow("configuracion", "conductor")) { ?><li><a href="?sec=configuracion&ssec=conductor">Conductores</a></li><? } ?>
+                                                    <? if($cp->isAllow("configuracion", "usuario")) { ?><li><a href="?sec=configuracion&ssec=usuario">Usuarios</a></li><? } ?>
+                                                    <? if($cp->isAllow("configuracion", "alarma")) { ?><li><a href="?sec=configuracion&ssec=alarma">Alarmas</a></li><? } ?>
+                                                    <? if($cp->isAllow("configuracion", "puntointeres")) { ?><li><a href="?sec=configuracion&ssec=puntointeres">Ptos. Interes</a></li><? } ?>
+                                                    <? if($cp->isAllow("configuracion", "geozona")) { ?><li><a href="?sec=configuracion&ssec=geozona">Geo Zona</a></li><? } ?>
                                                 </ul>
                                             </li>
                                         <? } ?>
@@ -105,12 +109,12 @@
                 <? if($cp->sec == "configuracion") { ?>
                     <div class="subnav subnav-fixed">
                         <ul class="nav nav-pills">
-                            <li <?= ($cp->getCSec()->sec == "vehiculo") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=vehiculo">Veh&iacute;culos</a></li>
-                            <li <?= ($cp->getCSec()->sec == "conductor") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=conductor">Conductores</a></li>
-                            <li <?= ($cp->getCSec()->sec == "usuario") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=usuario">Usuarios</a></li>
-                            <li <?= ($cp->getCSec()->sec == "alarma") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=alarma">Alarmas</a></li>
-                            <li <?= ($cp->getCSec()->sec == "puntointeres") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=puntointeres">Puntos de Inter&eacute;s</a></li>
-                            <li <?= ($cp->getCSec()->sec == "geozona") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=geozona">Geo Zona</a></li>
+                            <? if($cp->isAllow("configuracion", "vehiculo")) { ?><li <?= ($cp->getCSec()->sec == "vehiculo") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=vehiculo">Veh&iacute;culos</a></li><? } ?>
+                            <? if($cp->isAllow("configuracion", "conductor")) { ?><li <?= ($cp->getCSec()->sec == "conductor") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=conductor">Conductores</a></li><? } ?>
+                            <? if($cp->isAllow("configuracion", "usuario")) { ?><li <?= ($cp->getCSec()->sec == "usuario") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=usuario">Usuarios</a></li><? } ?>
+                            <? if($cp->isAllow("configuracion", "alarma")) { ?><li <?= ($cp->getCSec()->sec == "alarma") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=alarma">Alarmas</a></li><? } ?>
+                            <? if($cp->isAllow("configuracion", "puntointeres")) { ?><li <?= ($cp->getCSec()->sec == "puntointeres") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=puntointeres">Puntos de Inter&eacute;s</a></li><? } ?>
+                            <? if($cp->isAllow("configuracion", "geozona")) { ?><li <?= ($cp->getCSec()->sec == "geozona") ? " class='active'" : ""; ?>><a href="?sec=configuracion&ssec=geozona">Geo Zona</a></li><? } ?>
                         </ul>
                     </div>
                 <? } ?>
@@ -130,7 +134,7 @@
                 <? if($cp->sec == "monitoreo") { ?>
                 <div id="right-sidebar">
                     <div id="bar">
-                        <h2>&Uacute;ltimos movimientos</h2>
+                        <h2>&Uacute;ltimas Alarmas</h2>
                         <div class="scroll">
                         <ul id="alarma"></ul>
                         </div>
@@ -150,7 +154,7 @@
                         <div id="devices" class="jp-container">
 <!--                            <label for="devFiltro">Buscar veh&iacute;culo</label><input class="search" id="devFiltro"/>-->
                             <form id="devFiltro">
-                                <p><input type="text" class="search" name="sDev" value="" id="sDev" autocomplete="off" placeholder="Buscar Veh&iacute;culo"/></p>
+                                <input type="text" class="search" name="sDev" value="" id="sDev" autocomplete="off" placeholder="Buscar Veh&iacute;culo"/>
                             </form>
                             <div class="scroll" style="margin-left: -10px;">
                                 <ul class="grupo">

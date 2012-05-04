@@ -82,7 +82,11 @@ class CGeo {
             }
         } else {
             $this->layout = "vista/geozona.phtml";
-            $this->poligonos = $this->poMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->poligonos = $this->poMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->poligonos = $this->poMP->fetchByUser($this->cp->getSession()->get("userID"));
+            }
         }
     }
 

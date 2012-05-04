@@ -328,7 +328,11 @@ class CRConsumo {
         if (isset($_GET["op"])) {
         } else {
             $this->layout = "vista/reporte_base.phtml";
-            $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->grupos = $this->dgMP->fetchUserGrupo($this->cp->getSession()->get("userID"));
+            }
             $this->min = range(0,59,15);
             $this->hrs = range(0,23,1);
         }

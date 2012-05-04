@@ -214,6 +214,9 @@ input.error {
 
 #right-sidebar #bar ul#alarma li:nth-child(even) {
     background: url(../img/bg_negro.png);
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 #right-sidebar #bar ul#alarma li span#txt{
@@ -532,7 +535,7 @@ a.nomGrupo {
     padding: 10px;
     position: absolute;
 /*    border: 1px solid #ccc;*/
-    width: 300px;
+    width: 400px;
     z-index: 1;
     -moz-box-shadow: 0px 0px 10px #999;
     -webkit-box-shadow: 0px 0px 10px #999;
@@ -542,7 +545,7 @@ a.nomGrupo {
     border-radius:5px;
     top: 80px;
     left: 50%;
-    margin-left: -150px;
+    margin-left: -200px;
     cursor: move;
 }
 
@@ -553,6 +556,7 @@ a.nomGrupo {
 #active_dev ul li {
     padding: 2px 5px;
     color: #fff;
+    line-height: 14px;
 }
 
 /*span.edit {
@@ -739,6 +743,7 @@ form#puntoForm label {
     float: left;
     width: 80px;
     padding: 6px 0;
+    color: white;
 }
 
 form#puntoForm label span.tooltip {

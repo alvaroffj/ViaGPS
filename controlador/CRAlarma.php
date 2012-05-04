@@ -109,8 +109,8 @@ class CRAlarma {
 
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Alarmas')
-                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Período de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Vehículo", "Patente", "Latitud", "Longitud", "Velocidad", "Encendido", "Alarma", "Regla");
+                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
+                        $columnas = array("Fecha", "Vehï¿½culo", "Patente", "Latitud", "Longitud", "Velocidad", "Encendido", "Alarma", "Regla");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -209,10 +209,10 @@ class CRAlarma {
                 case 2: //tiempo
                     switch($regla->ID_OPERADOR) {
                         case 1:
-                            return "Detención > ".$regla->VALOR_REGLA." (Min.)";
+                            return "Detencion > ".$regla->VALOR_REGLA." (Min.)";
                             break;
                         case 2:
-                            return "Detención > ".$regla->VALOR_REGLA." (Min.)";
+                            return "Detencion > ".$regla->VALOR_REGLA." (Min.)";
                             break;
                     }
                     break;
@@ -220,10 +220,10 @@ class CRAlarma {
                     $pol = $this->poMP->find($regla->ID_POLIGONO, array("NOM_POLIGONO"));
                     switch($regla->ID_OPERADOR) {
                         case 4:
-                            return "Entró a la Geozona <b>".$pol->NOM_POLIGONO."</b>";
+                            return "Entro a la Geozona <b>".$pol->NOM_POLIGONO."</b>";
                             break;
                         case 5:
-                            return "Salió de la Geozona <b>".$pol->NOM_POLIGONO."</b>";
+                            return "Salio de la Geozona <b>".$pol->NOM_POLIGONO."</b>";
                             break;
                     }
                     break;
@@ -231,7 +231,7 @@ class CRAlarma {
                     $pol = $this->poMP->find($regla->ID_POLIGONO, array("NOM_POLIGONO"));
                     switch($regla->ID_OPERADOR) {
                         case 6:
-                            return "Cruzó la Geofrontera <b>".$pol->NOM_POLIGONO."</b>";
+                            return "Cruzo la Geofrontera <b>".$pol->NOM_POLIGONO."</b>";
                             break;
                     }
                     break;
@@ -239,10 +239,10 @@ class CRAlarma {
                     $pi = $this->piMP->find($regla->ID_POLIGONO, array("name"));
                     switch($regla->ID_OPERADOR) {
                         case 4:
-                            return "Entró al Punto de interés <b>".$pi->name."</b>";
+                            return "Entro al Punto de interes <b>".$pi->name."</b>";
                             break;
                         case 5:
-                            return "Salió del Punto de interés <b>".$pi->name."</b>";
+                            return "Salio del Punto de interes <b>".$pi->name."</b>";
                             break;
                     }
                     break;
@@ -303,7 +303,11 @@ class CRAlarma {
         if (isset($_GET["op"])) {
         } else {
             $this->layout = "vista/reporte_base.phtml";
-            $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->grupos = $this->dgMP->fetchUserGrupo($this->cp->getSession()->get("userID"));
+            }
             $this->min = range(0,59,15);
             $this->hrs = range(0,23,1);
         }

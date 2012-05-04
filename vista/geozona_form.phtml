@@ -58,13 +58,15 @@ if(isset($_GET["e"])) {
 <!--            <div id="msg" class="alert-message <? echo $tipoMsg; ?>"><? echo $msg; ?></div>-->
             <label>Nombre: </label>
             <input class="span2 required" type="text" name="nom" value="<?=$cp->getCSec()->getCSec()->poligono->NOM_POLIGONO;?>"/>
-            <label>Estado:</label>
-            <?=getSelect($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->poligono!=null)?$cp->getCSec()->getCSec()->poligono->ESTADO_POLIGONO:null);?>
-            <input class="btn danger" type="submit" value="Guardar" />
+<!--            <label>Estado:</label>-->
+            <?//=getSelect($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->poligono!=null)?$cp->getCSec()->getCSec()->poligono->ESTADO_POLIGONO:null);?>
+            <input class="btn btn-primary" type="submit" value="Guardar" />
             <input type="hidden" name="accountID" value="<?=$cp->getSession()->get("accountID");?>"/>
+            <input type="hidden" name="userID" value="<?=$cp->getSession()->get("userID")?>"/>
             <input type="hidden" name="tipo" value="<?=$cp->getCSec()->getCSec()->poligono->ID_TIPO_POLIGONO;?>"/>
             <input type="hidden" name="idPol" value="<?=$cp->getCSec()->getCSec()->poligono->ID_POLIGONO;?>"/>
             <input type="hidden" name="nPuntos" value="<?=count($cp->getCSec()->getCSec()->puntos);?>"/>
+            <input type="hidden" name="estado" value="1"/>
             <?
                 if($cp->getCSec()->getCSec()->puntos!=null) {
                     $nPuntos = count($cp->getCSec()->getCSec()->puntos);

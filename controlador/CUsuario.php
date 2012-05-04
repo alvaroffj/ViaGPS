@@ -135,7 +135,7 @@ class CUsuario {
                     if($this->obj->accountID != $this->cp->getSession()->get("accountID")) $this->cp->getSession()->salto("?sec=configuracion&ssec=usuario");
                     $this->roles = $this->roMP->fetchAll(array("roleID", "DisplayName"));
                     $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
-                    if($this->obj->roleID == 2) {
+                    if($this->obj->roleID == 2 || $this->obj->roleID == 3) {
                         $this->userGr = $this->dgMP->fetchUserGrupo($_GET["id"]);
                     }
                     break;

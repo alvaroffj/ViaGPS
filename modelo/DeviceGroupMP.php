@@ -110,7 +110,7 @@ class DeviceGroupMP {
                     FROM Device
                     WHERE accountID = $idCuenta
                     AND isActive = 1
-                    ORDER BY D.deviceID ASC";
+                    ORDER BY deviceID ASC";
             if($nDIn > 0)
                 $sql .= " AND deviceID NOT IN ($ids)";
         }
@@ -189,7 +189,7 @@ class DeviceGroupMP {
         if($idGrupo == null) $idGrupo = "GL.groupID";
         if($idUser == null) $idUser = "GL.userID";
 
-        $sql = "SELECT DG.displayName, DG.groupID, GL.groupListID FROM GroupList AS GL INNER JOIN DeviceGroup AS DG ON GL.userID = $idUser AND GL.groupID = $idGrupo AND GL.groupID = DG.groupID AND DG.isActive = 1";
+        $sql = "SELECT DG.displayName, DG.groupID, GL.groupListID, DG.isActive FROM GroupList AS GL INNER JOIN DeviceGroup AS DG ON GL.userID = $idUser AND GL.groupID = $idGrupo AND GL.groupID = DG.groupID AND DG.isActive = 1";
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         $arr = array();

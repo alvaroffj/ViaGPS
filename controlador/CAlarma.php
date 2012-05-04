@@ -309,7 +309,11 @@ class CAlarma {
                         $this->alerta = $this->alMP->find($_GET["id"]);
                         $this->acciones = $this->acMP->fetchByAlertaFull($_GET["id"]);
                         $this->tipo_accion = $this->taMP->fetchAll();
-                        $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+                        if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                            $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+                        } else {
+                            $this->grupos = $this->dgMP->fetchUserGrupo($this->cp->getSession()->get("userID"));
+                        }
                         $this->alerta_device = $this->adMP->fetchByAlerta($_GET["id"]);
                         $this->polygons = $this->poMP->fetchByCuentaTipo($this->cp->getSession()->get("accountID"), 2, true);
                         $this->polylines = $this->poMP->fetchByCuentaTipo($this->cp->getSession()->get("accountID"), 1, true);
@@ -321,7 +325,11 @@ class CAlarma {
             }
         } else {
             $this->layout = "vista/alarma.phtml";
-            $this->alertas = $this->alMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->alertas = $this->alMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->alertas = $this->alMP->fetchByUser($this->cp->getSession()->get("userID"));
+            }
         }
     }
 }

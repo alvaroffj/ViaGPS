@@ -13,15 +13,15 @@ function addUserGrupo() {
             beforeSend: function() {
 
             },
-            complete: function(data) {
-                var res = $.parseJSON(data.responseText);
+            success: function(data) {
+                var res = data;
                 if(res.error == 0) {
                     var fila = "<li id=\""+res.idUsGr+"\" style=\"position:relative; padding: 5px; border-left: 2px solid #ccc; margin-bottom: 4px;\"><a href=\"?sec=vehiculo&op=mod_grupo&id="+res.groupID+"\">"+res.displayName+"</a><a onClick=\"delUserGrupo("+res.idUsGr+"); return false;\" style=\"cursor:pointer; position: absolute; right: 0;\"><img src=\"img/delete.png\" border=\"0\" title=\"Quitar grupo\" alt=\"Quitar grupo\"/></a></li>";
                     $(fila).hide().appendTo("#grupos").fadeIn();
-                    $(".alert-message").html("<p>El grupo fue agregado correctamente</p>")
+                    $(".alert-message").html("<p>El grupo fue asignado correctamente</p>")
                         .attr("class", "alert-message success");
                 } else {
-                    $(".alert-message").html("<p>El grupo NO pudo ser agregado, intentelo de nuevo</p>")
+                    $(".alert-message").html("<p>El grupo NO pudo ser asignado, intentelo nuevamente</p>")
                         .attr("class", "alert-message error");
                 }
             }
@@ -64,5 +64,41 @@ $(document).ready(function(){
         },
         success: function(label) {
         }
+    });
+    $(".chzn-select").chosen();
+    $('div.btn-group[data-toggle="buttons-radio"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        var hidden  = $('input[name="' + name + '"]', form);
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            hidden.val($(this).val());
+            e.preventDefault();
+        });
+        if(button.val() == hidden.val()) {
+            button.addClass('active');
+        }
+        });
+    });
+    
+    $('div.btn-group[data-toggle="buttons-checkbox"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            var btn = $(this);
+            var hidden  = $('input[name="' + btn.attr("name") + '"]', form);
+            if(btn.hasClass("active")) {
+                hidden.val(0);
+            } else {
+                hidden.val(btn.val());
+            }
+            e.preventDefault();
+        });
+        });
     });
 });

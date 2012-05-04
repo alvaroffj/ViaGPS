@@ -232,11 +232,12 @@ function creaPuntoInteres(lat, lon) {
     $.ajax({
         url: "?sec=monitoreo&get=direccion&lat="+lat+"&lon="+lon,
         type: 'get',
+        dataType: 'json',
         beforeSend: function() {
 
         },
-        complete: function(data) {
-            var r = $.parseJSON(data.responseText);
+        success: function(data) {
+            var r = data;
             $puntoForm.find("input[name='dir']").val(r.DIRECCION);
             $puntoForm.fadeIn();
             dibujaPunto(latlng);
@@ -311,13 +312,14 @@ function savePunto(f) {
     $.ajax({
         url: "?sec=configuracion&ssec=puntointeres&do="+accion,
         type: 'post',
-//        dataType: 'json',
+        dataType: 'json',
         data: {
             nom: $("#nom", $puntoForm).val()
             , dir: $("#dir", $puntoForm).val()
             , lat: $("#lat", $puntoForm).val()
             , lon: $("#lon", $puntoForm).val()
             , accountID: $("#accountID", $puntoForm).val()
+            , userID: $("#userID", $puntoForm).val()
             , rad: $("#rad", $puntoForm).val()
             , estado: "1"
             , noSalto: ''
@@ -326,9 +328,9 @@ function savePunto(f) {
             $("#submit", $puntoForm).val("Guardando...").addClass("working");
             $("#cancelar", $puntoForm).addClass("working");
         },
-        complete: function(data) {
-            var res = $.parseJSON(data.responseText);
-            console.log(res);
+        success: function(data) {
+//            console.log(data.responseText);
+            var res = data;
             $("#submit", $puntoForm).val("Guardar").removeClass("working");
             $("#cancelar", $puntoForm).removeClass("working");
             if(res.error == 0) {
@@ -363,6 +365,7 @@ function showDevices() {
         },
         complete: function(data) {
             res = $.parseJSON(data.responseText);
+//            console.log(res);
             var nRes = res.length;
             var i;
             for(i=0; i<device.length; i++) {
@@ -504,11 +507,12 @@ function updateActive(res) {
     $.ajax({
         url: "?sec=monitoreo&get=direccion&lat="+res.latitude+"&lon="+res.longitude,
         type: 'get',
+        dataType: 'json',
         beforeSend: function() {
 
         },
-        complete: function(data) {
-            r = $.parseJSON(data.responseText);
+        success: function(data) {
+            var r = data;
             act_dev.find("#titulo").html("<b>Vehiculo: </b>"+res.displayName);
             if(res.driverID != "0" && res.contactPhone != "") {
                 act_dev.find("#conductor").html("<b>Conductor: </b>"+res.driverName+" ("+res.contactPhone+")");
@@ -718,8 +722,8 @@ $(document).ready(function(){
     var options = {
         valueNames: ['nomDevice']
     };
-
-    var deviceList = new List('devices', options);
+    if($(".nomDevice").length>0)
+        var deviceList = new List('devices', options);
 //    $("label", $("#devFiltro")).inFieldLabels();
     $map_canvas = $("#map_canvas");
     $lateralLeft = $("#left-sidebar");

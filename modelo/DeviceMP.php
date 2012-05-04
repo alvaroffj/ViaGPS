@@ -109,14 +109,18 @@ class DeviceMP {
     function fetchByUser($idUs) {
         $idUs = $this->_bd->limpia($idUs);
 
-        $sql = "SELECT D.deviceID, D.licensePlate, D.displayName
+        $sql = "SELECT D.deviceID, D.licensePlate, D.displayName, DR.driverID, L.latitude, L.longitude, from_unixtime(L.timestamp, '%d.%m.%Y %H:%i:%s') as fecha
                 FROM GroupList AS GL
                     INNER JOIN DeviceList AS DL
                     INNER JOIN $this->_dbTable AS D
+                    INNER JOIN Driver AS DR
+                    INNER JOIN LASTEVENTDATA AS L
                 ON GL.userID = $idUs
                     AND GL.groupID = DL.groupID 
                     AND DL.deviceID = D.deviceID
                     AND D.isActive = 1
+                    AND DR.driverID = D.driverID
+                    AND L.deviceID = D.deviceID
                 ORDER BY D.deviceID ASC";
 
         $res = $this->_bd->sql($sql);

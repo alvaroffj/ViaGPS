@@ -32,6 +32,17 @@ class AlertaMP {
         }
         return $arr;
     }
+    
+    public function fetchByUser($idUs) {
+        $idUs = $this->_bd->limpia($idUs);
+        $sql = "SELECT * FROM $this->_dbTable WHERE userID = $idUs";
+        $res = $this->_bd->sql($sql);
+        $arr = array();
+        while($row = mysql_fetch_object($res)) {
+            $arr[] = $row;
+        }
+        return $arr;
+    }
 
     public function save($data) {
         $data["idCuenta"] = $this->_bd->limpia($data["idCuenta"]);

@@ -75,7 +75,7 @@ class CReporte {
         switch($this->sec) {
             case 'auditoria':
                 include_once 'controlador/CAuditoria.php';
-                $this->tilSec = "Auditoría";
+                $this->tilSec = utf8_decode("AuditorÃ­a");
                 $this->_CSec = new CAuditoria($this);
                 break;
             case 'alarma':
@@ -116,7 +116,7 @@ class CReporte {
             default:
                 $this->sec = "auditoria";
                 include_once 'controlador/CAuditoria.php';
-                $this->tilSec = "Auditoría";
+                $this->tilSec = utf8_decode("AuditorÃ­a");
                 $this->_CSec = new CAuditoria($this);
                 break;
         }

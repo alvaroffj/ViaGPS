@@ -65,14 +65,15 @@ class EventDataMP {
     }
 
     function fetchLastByUser($id) {
-        $sql = "SELECT LE.*, D.licensePlate, D.displayName, D.vehicleID, from_unixtime(LE.timestamp, '%d-%m-%Y %h:%i:%s') as fecha
-                FROM GroupList AS GL INNER JOIN DeviceList AS DL INNER JOIN Device AS D INNER JOIN LASTEVENTDATA AS LE
+        $sql = "SELECT LE.*, D.licensePlate, D.displayName, D.vehicleID, from_unixtime(LE.timestamp, '%d-%m-%Y %h:%i:%s') as fecha, DR.driverID, DR.displayName AS driverName
+                FROM GroupList AS GL INNER JOIN DeviceList AS DL INNER JOIN Device AS D INNER JOIN LASTEVENTDATA AS LE INNER JOIN Driver AS DR
                 ON
                 GL.userID = $id
                 AND GL.groupID = DL.groupID
                 AND DL.deviceID = D.deviceID
                 AND LE.deviceID = D.deviceID
                 AND D.isActive = 1
+                AND DR.driverID = D.driverID
                 GROUP BY DL.DeviceID
                 ORDER BY D.deviceID ASC";
         $res = $this->_bd->sql($sql);

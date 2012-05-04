@@ -22,8 +22,29 @@ class CPrincipal {
         $this->cuenta = explode(".", $_SERVER["SERVER_NAME"]);
         $this->cuenta = $this->cuenta[0];
         $this->cuentaMP = new CuentaMP();
+        $this->access = array();
+        $this->access[0] = array();
+        $this->access[0]["monitoreo"] = array("visible"=>1);
+        $this->access[0]["reporte"] = array("visible"=>1);
+        $this->access[0]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>1,"usuario"=>1,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
+        
+        $this->access[1] = array();
+        $this->access[1]["monitoreo"] = array("visible"=>1);
+        $this->access[1]["reporte"] = array("visible"=>1);
+        $this->access[1]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>1,"usuario"=>1,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
+        
+        $this->access[2] = array();
+        $this->access[2]["monitoreo"] = array("visible"=>1);
+        $this->access[2]["reporte"] = array("visible"=>1);
+        $this->access[2]["configuracion"] = array("visible"=>0,"vehiculo"=>0,"conductor"=>0,"usuario"=>0,"alarma"=>0,"puntointeres"=>0,"geozona"=>0);
+        
+        $this->access[3] = array();
+        $this->access[3]["monitoreo"] = array("visible"=>1);
+        $this->access[3]["reporte"] = array("visible"=>1);
+        $this->access[3]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>0,"usuario"=>0,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
+        
         if($this->cuentaMP->isActive($this->cuenta) || $this->cuenta == "dev") {
-            $this->cuenta = ($this->cuenta == "dev")?"tbarriga":$this->cuenta;
+            $this->cuenta = ($this->cuenta == "dev")?"clientes":$this->cuenta;
             if ($this->checkLogin()) {
                 $this->setSec();
             } else {
@@ -34,6 +55,12 @@ class CPrincipal {
         } else {
             $this->layout = "vista/desactivado.phtml";
         }
+        
+        
+        
+//        echo "<pre>";
+//        print_r($access);
+//        echo "</pre>";
     }
 
     public function getLayout() {
@@ -70,28 +97,40 @@ class CPrincipal {
     function isSuperAdmin() {
         return ($this->ss->get("roleID") == 0);
     }
+    
+    function isAllow($sec, $sub = null) {
+        if($sub == null)
+            return ($this->access[$this->ss->get("roleID")][$sec]["visible"]==1);
+        else 
+            return ($this->access[$this->ss->get("roleID")][$sec][$sub]==1);
+    }
 
     function setSec() {
         $this->sec = (isset($_GET["sec"]))?$_GET["sec"]:"monitoreo";
         $this->showLayout = true;
         $this->thisLayout = true;
-        switch($this->sec) {
-            case 'log':
-                include_once 'CLog.php';
-                $this->_CSec = new CLog($this);
-                break;
-            case 'monitoreo':
-                require_once 'CMonitoreo.php';
-                $this->_CSec = new CMonitoreo($this);
-                break;
-            case 'configuracion':
-                include_once 'controlador/CConfiguracion.php';
-                $this->_CSec = new CConfiguracion($this);
-                break;
-            case 'reporte':
-                include_once 'controlador/CReporte.php';
-                $this->_CSec = new CReporte($this);
-                break;
+        
+        if($this->isAllow($this->sec)) {
+            switch($this->sec) {
+                case 'log':
+                    include_once 'CLog.php';
+                    $this->_CSec = new CLog($this);
+                    break;
+                case 'monitoreo':
+                    require_once 'CMonitoreo.php';
+                    $this->_CSec = new CMonitoreo($this);
+                    break;
+                case 'configuracion':
+                    include_once 'controlador/CConfiguracion.php';
+                    $this->_CSec = new CConfiguracion($this);
+                    break;
+                case 'reporte':
+                    include_once 'controlador/CReporte.php';
+                    $this->_CSec = new CReporte($this);
+                    break;
+            }
+        } else {
+            $this->ss->salto("/");
         }
     }
 }

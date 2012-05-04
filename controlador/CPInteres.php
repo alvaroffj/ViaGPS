@@ -24,14 +24,14 @@ class CPInteres {
 
     function setDo() {
         if (isset($_GET["do"])) {
-            $attr = array("accountid");
+            $attr = array("accountid", "userID");
             $this->cp->showLayout = false;
             $this->do = mysql_escape_string($_GET["do"]);
             switch ($this->do) {
                 case 'mod':
                     if($this->cp->getSession()->get("accountID") == $_POST["accountID"]) {
                         $pt = $this->piMP->find($_POST["id"], $attr);
-                        if($pt->accountid == $this->cp->getSession()->get("accountID")) {
+                        if($pt->accountid == $this->cp->getSession()->get("accountID") && (($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) || $this->cp->getSession()->get("userID")==$pt->userID)) {
                             if($this->piMP->update($_POST)) {
                                 $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres&op=mod&id=".$_POST["id"]."&e=0");
                             } else {
@@ -67,7 +67,7 @@ class CPInteres {
                 case 'del':
                     if(isset($_GET["id"])) {
                         $pt = $this->piMP->find($_GET["id"], $attr);
-                        if($pt->accountid == $this->cp->getSession()->get("accountID")) {
+                        if($pt->accountid == $this->cp->getSession()->get("accountID") && (($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) || $this->cp->getSession()->get("userID")==$pt->userID)) {
                             if($this->piMP->desactiva($_GET["id"])) {
                                 $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres&e=0");
                             } else $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres&e=1");
@@ -98,7 +98,11 @@ class CPInteres {
             }
         } else {
             $this->layout = "vista/punto_interes.phtml";
-            $this->puntos = $this->piMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->puntos = $this->piMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->puntos = $this->piMP->fetchByUser($this->cp->getSession()->get("userID"));
+            }
         }
     }
 

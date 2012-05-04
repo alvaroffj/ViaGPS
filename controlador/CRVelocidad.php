@@ -78,8 +78,8 @@ class CRVelocidad {
 
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Velocidad')
-                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Período de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Vehículo", "Patente", "Latitud", "Longitud", "Velocidad");
+                                ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
+                        $columnas = array("Fecha", "Vehï¿½culo", "Patente", "Latitud", "Longitud", "Velocidad");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -158,7 +158,11 @@ class CRVelocidad {
         if (isset($_GET["op"])) {
         } else {
             $this->layout = "vista/reporte_base.phtml";
-            $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            if($this->cp->cp->isAdmin() || $this->cp->cp->isSuperAdmin()) {
+                $this->grupos = $this->dgMP->fetchByCuenta($this->cp->getSession()->get("accountID"));
+            } else {
+                $this->grupos = $this->dgMP->fetchUserGrupo($this->cp->getSession()->get("userID"));
+            }
             $this->min = range(0,59,15);
             $this->hrs = range(0,23,1);
         }

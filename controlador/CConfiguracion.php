@@ -16,11 +16,7 @@ class CConfiguracion {
     function __construct($cp) {
         $this->ss = new session();
         $this->cp = $cp;
-        if ($this->cp->isAdmin() || $this->cp->isSuperAdmin()) {
-            $this->setSec();
-        } else {
-            $this->ss->salto("index.php");
-        }
+        $this->setSec();
     }
 
     public function getLayout() {
@@ -49,39 +45,38 @@ class CConfiguracion {
     }
 
     function setSec() {
-        $this->sec = $_GET["ssec"];
+        $this->sec = (isset($_GET["ssec"]))?$_GET["ssec"]:"vehiculos";
         $this->showLayout = true;
         $this->thisLayout = true;
-        switch($this->sec) {
-            case 'usuario':
-                include_once 'controlador/CUsuario.php';
-                $this->_CSec = new CUsuario($this);
-                break;
-            case 'vehiculo':
-                include_once 'controlador/CVehiculo.php';
-                $this->_CSec = new CVehiculo($this);
-                break;
-            case 'conductor':
-                include_once 'controlador/CConductor.php';
-                $this->_CSec = new CConductor($this);
-                break;
-            case 'alarma':
-                include_once 'controlador/CAlarma.php';
-                $this->_CSec = new CAlarma($this);
-                break;
-            case 'geozona':
-                include_once 'controlador/CGeo.php';
-                $this->_CSec = new CGeo($this);
-                break;
-            case 'puntointeres':
-                include_once 'controlador/CPInteres.php';
-                $this->_CSec = new CPInteres($this);
-                break;
-            default:
-                $this->sec = "vehiculo";
-                include_once 'controlador/CVehiculo.php';
-                $this->_CSec = new CVehiculo($this);
-                break;
+        if($this->cp->isAllow("configuracion", $this->sec)) {
+            switch($this->sec) {
+                case 'usuario':
+                    include_once 'controlador/CUsuario.php';
+                    $this->_CSec = new CUsuario($this);
+                    break;
+                case 'vehiculo':
+                    include_once 'controlador/CVehiculo.php';
+                    $this->_CSec = new CVehiculo($this);
+                    break;
+                case 'conductor':
+                    include_once 'controlador/CConductor.php';
+                    $this->_CSec = new CConductor($this);
+                    break;
+                case 'alarma':
+                    include_once 'controlador/CAlarma.php';
+                    $this->_CSec = new CAlarma($this);
+                    break;
+                case 'geozona':
+                    include_once 'controlador/CGeo.php';
+                    $this->_CSec = new CGeo($this);
+                    break;
+                case 'puntointeres':
+                    include_once 'controlador/CPInteres.php';
+                    $this->_CSec = new CPInteres($this);
+                    break;
+            }
+        } else {
+            $this->cp->getSession()->salto("/");
         }
     }
 
