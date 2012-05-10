@@ -96,8 +96,7 @@ class DeviceGroupMP {
                     FROM DeviceList AS DL INNER JOIN Device AS D
                     ON DL.groupID = $idGrupo
                     AND DL.deviceID = D.deviceID
-                    AND D.isActive = 1
-                    ORDER BY D.deviceID ASC";
+                    AND D.isActive = 1";
         } else {
             $nDIn = count($deInGroup);
             for($i=0; $i<$nDIn; $i++) {
@@ -109,8 +108,7 @@ class DeviceGroupMP {
             $sql = "SELECT deviceID, vehicleID, licensePlate, simPhoneNumber, imeiNumber, displayName
                     FROM Device
                     WHERE accountID = $idCuenta
-                    AND isActive = 1
-                    ORDER BY deviceID ASC";
+                    AND isActive = 1";
             if($nDIn > 0)
                 $sql .= " AND deviceID NOT IN ($ids)";
         }

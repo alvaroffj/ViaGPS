@@ -40,7 +40,9 @@ class AlertaLogMP {
             $sql = "SELECT AL.*, R.*, ED.*, A.NOM_ALERTA, from_unixtime(ED.timestamp, '%d.%m.%Y %H:%i:%s') as fecha FROM $this->_dbTable AS AL INNER JOIN EventData AS ED INNER JOIN REGLA AS R INNER JOIN ALERTA AS A
                     ON AL.TIMESTAMP = ED.timestamp AND R.ID_REGLA = AL.ID_REGLA
                     AND AL.TIMESTAMP > $ini AND AL.deviceID IN (".$device.")
-                    AND A.ID_ALERTA = R.ID_ALERTA ORDER BY ED.timestamp DESC";
+                    AND A.ID_ALERTA = R.ID_ALERTA 
+                    ORDER BY ED.timestamp DESC
+                    LIMIT BY 0,20";
         }
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);

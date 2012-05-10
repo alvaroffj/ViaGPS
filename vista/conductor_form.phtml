@@ -1,6 +1,6 @@
 <?php
 function getSelect($obj, $val, $id, $nom, $sel = null, $style=null, $onChange=null, $ninguno = false) {
-    $r = "<SELECT name='$nom' class='medium-input' style='$style' onChange=\"" . $onChange . "\" id='$nom'>";
+    $r = "<SELECT name='$nom' class='chzn-select span3' style='$style' onChange=\"" . $onChange . "\" id='$nom'>";
     if($ninguno)
         $r .= "<OPTION value = '0'>Ninguno</OPTION>";
     else 
@@ -13,6 +13,37 @@ function getSelect($obj, $val, $id, $nom, $sel = null, $style=null, $onChange=nu
         }
     }
     $r .= "</SELECT>";
+    return $r;
+}
+
+function getRadio($obj, $val, $id, $nom, $sel=null) {
+    $r = "<div class='btn-group' data-toggle='buttons-radio' name='$nom'>";
+    foreach($obj as $o) {
+        if($sel!=null && $o->$id==$sel) {
+            $r .= "<button class='btn active' value='".trim($o->$id)."'>".utf8_encode($o->$val)."</button>";
+        } else {
+            $r .= "<button class='btn' value='".trim($o->$id)."'>".utf8_encode($o->$val)."</button>";
+        }
+    }
+    $r .= "</div>";
+    $r .= "<input type='hidden' name='$nom' value='$sel' />";
+    return $r;
+}
+
+function getCheck($obj, $val, $id, $nom, $sel=null) {
+    $r = "<div class='btn-group' data-toggle='buttons-checkbox' name='$nom'>";
+    $h = "";
+    foreach($obj as $o) {
+        if($sel!=null && $o->$sel) {
+            $r .= "<button name='".$nom."_".$o->$id."' class='btn active' value='1'>".utf8_encode($o->$val)."</button>";
+            $h .= "<input type='hidden' name='".$nom."_".$o->$id."' value='1' />";
+        } else {
+            $r .= "<button name='".$nom."_".$o->$id."' class='btn' value='1'>".utf8_encode($o->$val)."</button>";
+            $h .= "<input type='hidden' name='".$nom."_".$o->$id."' value='0' />";
+        }
+    }
+    $r .= "</div>";
+    $r .= $h;
     return $r;
 }
 
@@ -34,7 +65,8 @@ if(isset($_GET["e"])) {
     }
 }
 ?>
-<!--<link rel="stylesheet" type="text/css" href="css/form.css" />-->
+<link rel="stylesheet" href="css/chosen.css" type="text/css" />
+<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
 <script src="js/usuario_form.js" type="text/javascript"></script>
 <div  class="container" style="padding-top:80px;">
     <div class="page-header">
@@ -76,8 +108,8 @@ if(isset($_GET["e"])) {
         <div class="control-group">
             <label class="control-label">Estado:</label>
             <div class="controls">
-            <?=getSelect($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->isActive:"");?>
-                </div>
+            <?=getRadio($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->isActive:"1");?>
+            </div>
         </div>
         <div class="control-group">
             <div class="controls">

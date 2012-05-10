@@ -95,6 +95,37 @@ function getSelect2($obj, $val, $id, $nom, $sel = null, $style=null, $onChange=n
     return $r;
 }
 
+function getRadio($obj, $val, $id, $nom, $sel=null) {
+    $r = "<div class='btn-group' data-toggle='buttons-radio' name='$nom'>";
+    foreach($obj as $o) {
+        if($sel!=null && $o->$id==$sel) {
+            $r .= "<button class='btn active' value='".trim($o->$id)."'>".utf8_encode($o->$val)."</button>";
+        } else {
+            $r .= "<button class='btn' value='".trim($o->$id)."'>".utf8_encode($o->$val)."</button>";
+        }
+    }
+    $r .= "</div>";
+    $r .= "<input type='hidden' name='$nom' value='$sel' />";
+    return $r;
+}
+
+function getCheck($obj, $val, $id, $nom, $sel=null) {
+    $r = "<div class='btn-group' data-toggle='buttons-checkbox' name='$nom'>";
+    $h = "";
+    foreach($obj as $o) {
+        if($sel!=null && $o->$sel) {
+            $r .= "<button name='".$nom."_".$o->$id."' class='btn active' value='1'>".utf8_encode($o->$val)."</button>";
+            $h .= "<input type='hidden' name='".$nom."_".$o->$id."' value='1' />";
+        } else {
+            $r .= "<button name='".$nom."_".$o->$id."' class='btn' value='1'>".utf8_encode($o->$val)."</button>";
+            $h .= "<input type='hidden' name='".$nom."_".$o->$id."' value='0' />";
+        }
+    }
+    $r .= "</div>";
+    $r .= $h;
+    return $r;
+}
+
 $error = array("Los cambios fueron guardados correctamente", "La regla fue agregada correctamente", "El vehiculo fue agregado correctamente", "La acci&oacute;n fue agregada correctamente");
 if(isset($_GET["e"])) {
     $msg = $error[$_GET["e"]];
@@ -144,8 +175,8 @@ if(isset($_GET["e"])) {
             <div class="control-group">
                 <label class="control-label">Estado:</label>
                 <div class="controls">
-                <?=getSelect2($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->alerta!=null)?$cp->getCSec()->getCSec()->alerta->ESTADO_ALERTA:"");?>
-                    </div>
+                <?=getRadio($cp->getCSec()->getCSec()->estados, "estado", "id", "estado", ($cp->getCSec()->getCSec()->obj!=null)?$cp->getCSec()->getCSec()->obj->isActive:"1");?>
+                </div>
             </div>
             <div class="control-group">
                 <div class="controls">

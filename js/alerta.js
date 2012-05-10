@@ -4,7 +4,7 @@ function desactivaMenor(sel) {
     var hora = sel[sel.selectedIndex].value;
     var name = sel.name.split("_");
     var dest = name[0]+"_fin_"+name[2];
-    console.log(dest);
+//    console.log(dest);
     var op = $("#"+dest).children();
     var n = op.length;
     var i;
@@ -78,7 +78,7 @@ function setNext(sel) {
                         break;
                 }
             } else {
-                console.log("sensor");
+//                console.log("sensor");
                 $.ajax({
                     url: "?sec=configuracion&ssec=alarma&get=sensor&id="+idSel,
                     type: "get",
@@ -132,7 +132,7 @@ function getSelect(idSel, par) {
 
 function setValor(sel) {
     var valAct = sel[sel.selectedIndex].value;
-    console.log("valAct: "+valAct);
+//    console.log("valAct: "+valAct);
     var formAux;
     if($(sel).attr("padre")!=4) {
         formAux = $("#val_"+valAct).html();
@@ -145,7 +145,7 @@ function setValor(sel) {
             type: "get",
             complete: function(data) {
                 var res = $.parseJSON(data.responseText);
-                console.log(res);
+//                console.log(res);
                 if(res.TIPO_PROCESO_SENSOR == 1) {
                     ope = Array(Array("7", "Esta"));
                     $.ajax({
@@ -153,7 +153,7 @@ function setValor(sel) {
                         type: "get",
                         complete: function(data) {
                             var res = $.parseJSON(data.responseText);
-                            console.log(res);
+//                            console.log(res);
                             var n = res.length;
                             var par = [];
                             for(var i=0; i<n; i++) {
@@ -213,5 +213,40 @@ $(document).ready(function() {
         },
         success: function(label) {
         }
+    });
+    $('div.btn-group[data-toggle="buttons-radio"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        var hidden  = $('input[name="' + name + '"]', form);
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            hidden.val($(this).val());
+            e.preventDefault();
+        });
+        if(button.val() == hidden.val()) {
+            button.addClass('active');
+        }
+        });
+    });
+    
+    $('div.btn-group[data-toggle="buttons-checkbox"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            var btn = $(this);
+            var hidden  = $('input[name="' + btn.attr("name") + '"]', form);
+            if(btn.hasClass("active")) {
+                hidden.val(0);
+            } else {
+                hidden.val(btn.val());
+            }
+            e.preventDefault();
+        });
+        });
     });
 });

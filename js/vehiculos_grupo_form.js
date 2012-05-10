@@ -13,4 +13,39 @@ $(document).ready(function(){
         success: function(label) {
         }
     });
+    $('div.btn-group[data-toggle="buttons-radio"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        var hidden  = $('input[name="' + name + '"]', form);
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            hidden.val($(this).val());
+            e.preventDefault();
+        });
+        if(button.val() == hidden.val()) {
+            button.addClass('active');
+        }
+        });
+    });
+    
+    $('div.btn-group[data-toggle="buttons-checkbox"]').each(function(){
+        var group   = $(this);
+        var form    = group.parents('form').eq(0);
+        var name    = group.attr('name');
+        $('button', group).each(function(){
+        var button = $(this);
+        button.live('click', function(e){
+            var btn = $(this);
+            var hidden  = $('input[name="' + btn.attr("name") + '"]', form);
+            if(btn.hasClass("active")) {
+                hidden.val(0);
+            } else {
+                hidden.val(btn.val());
+            }
+            e.preventDefault();
+        });
+        });
+    });
 });
