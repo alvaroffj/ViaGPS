@@ -48,7 +48,7 @@ class CPrincipal {
         $this->access[3]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>0,"usuario"=>0,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
         
         if($this->cuentaMP->isActive($this->cuenta) || $this->cuenta == "dev") {
-            $this->cuenta = ($this->cuenta == "dev")?"clientes":$this->cuenta;
+            $this->cuenta = ($this->cuenta == "dev")?"rapel":$this->cuenta;
             if ($this->checkLogin()) {
                 $this->setSec();
             } else {

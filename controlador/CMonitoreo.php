@@ -145,7 +145,9 @@ class CMonitoreo {
                     } else {
                         $device = $this->deMP->fetchByUser($this->cp->getSession()->get("userID"));
                     }
-
+                    echo "<pre>";
+                    print_r($device);
+                    echo "</pre>";
                     $devId = array();
                     foreach($device as $d) {
                         $devId[] = $d->deviceID;
