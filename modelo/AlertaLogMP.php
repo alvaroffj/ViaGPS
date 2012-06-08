@@ -44,7 +44,7 @@ class AlertaLogMP {
                     ORDER BY ED.timestamp DESC
                     LIMIT 0,20";
         }
-        echo $sql."<br>";
+//        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         $arr = array();
         if($res) {
