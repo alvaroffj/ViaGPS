@@ -30,13 +30,13 @@ class CPrincipal {
         $this->access[0]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>1,"usuario"=>1,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
         
         $this->access[1] = array();
-        $this->access[3]["log"] = array("visible"=>1);
+        $this->access[1]["log"] = array("visible"=>1);
         $this->access[1]["monitoreo"] = array("visible"=>1);
         $this->access[1]["reporte"] = array("visible"=>1);
         $this->access[1]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>1,"usuario"=>1,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
         
         $this->access[2] = array();
-        $this->access[3]["log"] = array("visible"=>1);
+        $this->access[2]["log"] = array("visible"=>1);
         $this->access[2]["monitoreo"] = array("visible"=>1);
         $this->access[2]["reporte"] = array("visible"=>1);
         $this->access[2]["configuracion"] = array("visible"=>0,"vehiculo"=>0,"conductor"=>0,"usuario"=>0,"alarma"=>0,"puntointeres"=>0,"geozona"=>0);
@@ -48,7 +48,7 @@ class CPrincipal {
         $this->access[3]["configuracion"] = array("visible"=>1,"vehiculo"=>1,"conductor"=>0,"usuario"=>0,"alarma"=>1,"puntointeres"=>1,"geozona"=>1);
         
         if($this->cuentaMP->isActive($this->cuenta) || $this->cuenta == "dev") {
-            $this->cuenta = ($this->cuenta == "dev")?"rapel":$this->cuenta;
+            $this->cuenta = ($this->cuenta == "dev")?"maxximiza":$this->cuenta;
             if ($this->checkLogin()) {
                 $this->setSec();
             } else {

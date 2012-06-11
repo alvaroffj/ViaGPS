@@ -17,7 +17,7 @@ $(document).ready(function(){
                     dataType: "json",
                     data: $(form).serializeArray(),
                     success: function(data) {
-                        console.log(data);
+//                        console.log(data);
                         $msg.html(data.MENSAJE);
                         if(data.ERROR == 0) { //OK
                             window.location.reload(true);
