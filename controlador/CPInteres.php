@@ -46,11 +46,17 @@ class CPInteres {
                     break;
                 case 'add':
                     if($this->cp->getSession()->get("accountID") == $_POST["accountID"]) {
-                        $this->piMP->insert($_POST);
-                        if(!isset($_POST["noSalto"]))
-                            $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres");
-                        else {
-                            $r = array("error"=>0, "msg"=>"El punto de inter&eacute;s fue agregado correctamente");
+                        $res = $this->piMP->insert($_POST);
+                        if($res) {
+                            if(!isset($_POST["noSalto"]))
+                                $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres");
+                            else {
+                                $r = array("error"=>0, "msg"=>"El punto de inter&eacute;s fue agregado correctamente");
+                                echo json_encode($r);
+                                die();
+                            }
+                        } else {
+                            $r = array("error"=>1, "msg"=>"El punto de inter&eacute;s NO pudo ser agregado");
                             echo json_encode($r);
                             die();
                         }
@@ -58,7 +64,7 @@ class CPInteres {
                         if(!isset($_POST["noSalto"]))
                             $this->cp->getSession()->salto("?sec=configuracion&ssec=puntointeres&op=add&e=2");
                         else {
-                            $r = array("error"=>0, "msg"=>"El punto de inter&eacute;s NO pudo ser agregado");
+                            $r = array("error"=>1, "msg"=>"El punto de inter&eacute;s NO pudo ser agregado");
                             echo json_encode($r);
                             die();
                         }

@@ -329,6 +329,7 @@ function savePunto(f) {
             $("#cancelar", $puntoForm).addClass("working");
         },
         success: function(data) {
+//            console.log(data);
 //            console.log(data.responseText);
             var res = data;
             $("#submit", $puntoForm).val("Guardar").removeClass("working");
@@ -842,7 +843,6 @@ $(document).ready(function(){
         },
         submitHandler: function(form) {
             if(puntoNew!=null) {
-                console.log("ok");
                 if(!$("#submit", $puntoForm).hasClass("working")) {
                     savePunto(form);
                 }

@@ -96,6 +96,7 @@ class PInteresMP {
 //        echo $sql."<br>";
         $res = $this->_bd->sql($sql);
         return mysql_insert_id();
+//        return $sql;
     }
 
     function update($data) {
