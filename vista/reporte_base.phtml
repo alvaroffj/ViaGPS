@@ -50,9 +50,9 @@ function getTime($arr, $nom) {
 <? } ?>
     <h2><?=(isset($_GET["ajax"]))?"Reportes > ":""?><?=htmlentities($cp->getCSec()->tilSec)?></h2>
     <div class="mon_botonera">
-        <a id="btn_down" class="checkbox tooltip" title="Descargar reporte"><img src="img/save.png" height="20"/></a>
+        <a id="btn_down" class="checkbox tp" title="Descargar reporte"><i class="icon-download-alt"></i></a>
 <!--        <a id="btn_print" class="checkbox tooltip" onClick="showPInteres(); return false;" title="Imprimir reporte"><img src="img/print.png" height="20"/></a>-->
-        <a id="btn_pint" class="checkbox tooltip" onClick="showPInteres(); return false;" title="Mostrar puntos de interes"><img src="img/marker.png" height="20"/></a>
+        <a id="btn_pint" class="checkbox tp" onClick="showPInteres(); return false;" title="Mostrar puntos de interes"><i class="icon-map-marker"></i></a>
     </div>
     <div id="filtros">
         <form name="alerta" method="post" id="formu" action="?sec=reporte&ssec=<?=$cp->getCSec()->sec?>&get=reporte" class="<?=(isset($_GET["ajax"]))?"side":"inline"?>">

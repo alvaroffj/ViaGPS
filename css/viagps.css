@@ -444,7 +444,7 @@ a.nomGrupo {
 .mon_botonera a.checkbox {
     margin: 0px;
     display: inline-block;
-    padding: 0 5px;
+    padding: 0;
 }
 
 .mon_botonera a:hover i{

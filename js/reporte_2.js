@@ -212,12 +212,15 @@ function downReporte(e) {
 }
 
 $(document).ready(function() {
+    $(".tp").tooltip();
     reset();
     $reporte = $("#reporte");
     $filtros = $("#filtros");
     $btn_pint = $("#btn_pint");
-    if(reportes[reporteSel].showMapa)
+    if(reportes[reporteSel].showMapa) {
         $reporte.height($(window).height()-100-$filtros.height());
+        $reporte.css("padding", "0px");
+    }
 //    console.log($filtros.height());
 //    console.log($reporte.height());
     fecha = new Date();

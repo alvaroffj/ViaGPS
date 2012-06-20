@@ -66,7 +66,7 @@ class CRVelocidad {
                         require_once 'Classes/PHPExcel.php';
 
                         $objPHPExcel = new PHPExcel();
-                        $objPHPExcel->getProperties()->setCreator("GPSLine")
+                        $objPHPExcel->getProperties()->setCreator("ViaGPS")
                                 ->setTitle("Reporte de Velocidad " . $ini . " - " . $fin)
                                 ->setSubject("Reporte de Velocidad " . $ini . " - " . $fin)
                                 ->setDescription("Reporte de Velocidad " . $ini . " - " . $fin);
@@ -79,7 +79,7 @@ class CRVelocidad {
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Velocidad')
                                 ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Veh�culo", "Patente", "Latitud", "Longitud", "Velocidad");
+                        $columnas = array("Fecha", "Vehiculo", "Patente", "Latitud", "Longitud", "Velocidad");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {

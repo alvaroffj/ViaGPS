@@ -60,7 +60,7 @@ class CRDistancia {
                         require_once 'Classes/PHPExcel.php';
 
                         $objPHPExcel = new PHPExcel();
-                        $objPHPExcel->getProperties()->setCreator("GPSLine")
+                        $objPHPExcel->getProperties()->setCreator("ViaGPS")
                                 ->setTitle("Reporte de Km Recorridos " . $ini . " - " . $fin)
                                 ->setSubject("Reporte de Km Recorridos " . $ini . " - " . $fin)
                                 ->setDescription("Reporte de Km Recorridos " . $ini . " - " . $fin);

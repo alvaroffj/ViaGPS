@@ -62,7 +62,7 @@ class CRConsumo {
                         require_once 'Classes/PHPExcel.php';
 
                         $objPHPExcel = new PHPExcel();
-                        $objPHPExcel->getProperties()->setCreator("GPSLine")
+                        $objPHPExcel->getProperties()->setCreator("ViaGPS")
                                 ->setTitle("Reporte de Consumo " . $ini . " - " . $fin)
                                 ->setSubject("Reporte de Consumo " . $ini . " - " . $fin)
                                 ->setDescription("Reporte de Consumo " . $ini . " - " . $fin);

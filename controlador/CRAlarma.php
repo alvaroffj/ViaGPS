@@ -97,7 +97,7 @@ class CRAlarma {
                         require_once 'Classes/PHPExcel.php';
 
                         $objPHPExcel = new PHPExcel();
-                        $objPHPExcel->getProperties()->setCreator("GPSLine")
+                        $objPHPExcel->getProperties()->setCreator("ViaGPS")
                                 ->setTitle("Reporte de Alarmas " . $ini . " - " . $fin)
                                 ->setSubject("Reporte de Alarmas " . $ini . " - " . $fin)
                                 ->setDescription("Reporte de Alarmas " . $ini . " - " . $fin);
@@ -110,7 +110,7 @@ class CRAlarma {
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Alarmas')
                                 ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Veh�culo", "Patente", "Latitud", "Longitud", "Velocidad", "Encendido", "Alarma", "Regla");
+                        $columnas = array("Fecha", "Vehiculo", "Patente", "Latitud", "Longitud", "Velocidad", "Encendido", "Alarma", "Regla");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
