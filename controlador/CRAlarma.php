@@ -90,7 +90,7 @@ class CRAlarma {
                         $license[$_GET["id_device"]] = $dev->licensePlate;
                         $nombre[$_GET["id_device"]] = $dev->displayName;
                         if($dev->accountID == $this->cp->getSession()->get("accountID")) {
-                            $rep = $this->alMP->reporte($ini, $fin, array($_POST["id_device"]));
+                            $rep = $this->alMP->reporte($ini, $fin, array($_GET["id_device"]));
                         }
                     }
                     if($rep != null) {
