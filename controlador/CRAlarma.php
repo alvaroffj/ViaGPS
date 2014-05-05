@@ -95,7 +95,9 @@ class CRAlarma {
                     }
                     if($rep != null) {
                         require_once 'Classes/PHPExcel.php';
-
+                        $cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_phpTemp;
+                        $cacheSettings = array( ' memoryCacheSize ' => '8MB');
+                        PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
                         $objPHPExcel = new PHPExcel();
                         $objPHPExcel->getProperties()->setCreator("ViaGPS")
                                 ->setTitle("Reporte de Alarmas " . $ini . " - " . $fin)
