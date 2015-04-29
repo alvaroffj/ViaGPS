@@ -94,7 +94,9 @@ class CRAlarma {
                         }
                     }
                     if($rep != null) {
+                        require_once 'modelo/DireccionMP.php';
                         require_once 'Classes/PHPExcel.php';
+                        $this->diMP = new DireccionMP();
                         $cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_phpTemp;
                         $cacheSettings = array( ' memoryCacheSize ' => '8MB');
                         PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
@@ -112,7 +114,7 @@ class CRAlarma {
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(5, 2, 'Reporte de Alarmas')
                                 ->setCellValueByColumnAndRow(5, 3, utf8_encode('Periodo de tiempo: ') . $fini . " / ".$ffin);
-                        $columnas = array("Fecha", "Vehiculo", "Patente", "Latitud", "Longitud", "Velocidad", "Encendido", "Alarma", "Regla");
+                        $columnas = array("Fecha", "Vehiculo", "Patente", "Direccion", "Comuna", "Region", "Velocidad", "Encendido", "Alarma", "Regla");
                         $nCol = count($columnas);
                         $rowIni = 7;
                         for($i=0; $i<$nCol; $i++) {
@@ -122,16 +124,18 @@ class CRAlarma {
                         $km = 0;
                         $i = 0;
                         foreach ($rep as $r) {
+                            $dir = $this->getDireccion($r->latitude, $r->longitude);
                             $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow(1, $rowIni+$i, $r->fecha)
                                 ->setCellValueByColumnAndRow(2, $rowIni+$i, $nombre[$r->deviceID])
                                 ->setCellValueByColumnAndRow(3, $rowIni+$i, $license[$r->deviceID])
-                                ->setCellValueByColumnAndRow(4, $rowIni+$i, $r->latitude)
-                                ->setCellValueByColumnAndRow(5, $rowIni+$i, $r->longitude)
-                                ->setCellValueByColumnAndRow(6, $rowIni+$i, round($r->speedKPH))
-                                ->setCellValueByColumnAndRow(7, $rowIni+$i, ($r->encendido=="1")?"Si":"No")
-                                ->setCellValueByColumnAndRow(8, $rowIni+$i, $r->NOM_ALERTA)
-                                ->setCellValueByColumnAndRow(9, $rowIni+$i, utf8_encode(strip_tags($this->traduceRegla($r))));
+                                ->setCellValueByColumnAndRow(4, $rowIni+$i, $dir->DIRECCION)
+                                ->setCellValueByColumnAndRow(5, $rowIni+$i, $dir->COMUNA)
+                                ->setCellValueByColumnAndRow(6, $rowIni+$i, $dir->REGION)
+                                ->setCellValueByColumnAndRow(7, $rowIni+$i, round($r->speedKPH))
+                                ->setCellValueByColumnAndRow(8, $rowIni+$i, ($r->encendido=="1")?"Si":"No")
+                                ->setCellValueByColumnAndRow(9, $rowIni+$i, $r->NOM_ALERTA)
+                                ->setCellValueByColumnAndRow(10, $rowIni+$i, utf8_encode(strip_tags($this->traduceRegla($r))));
                             $i++;
                         }
                         
@@ -195,16 +199,66 @@ class CRAlarma {
         }
     }
 
+    function getDireccion($lat, $lon) {
+        $url = new stdClass();
+        $url->LATITUD = round($lat, 5);
+        $url->LONGITUD = round($lon, 5);
+        $res = $this->diMP->find($url->LATITUD, $url->LONGITUD);
+        if($res != null) {
+            $res->fuente = "InternalBD";
+            return $res;
+        } else {
+            $delay = 0;
+            $geocode_pending = true;
+            $urlBase = "http://maps.google.com/maps/api/geocode/json?";
+            while ($geocode_pending) {
+                $urlRequest = $urlBase . "latlng=$lat,$lon&sensor=true&region=CL&language=ES";
+                $dir = json_decode(file_get_contents($urlRequest));
+                $status = $dir->status;
+                if (strcmp($status, "OK") == 0) {
+                    $geocode_pending = false;
+                    $url->DIRECCION = $dir->results[0]->formatted_address."";
+                    $n = count($dir->results[0]->address_components);
+                    for($i=0; $i<$n; $i++) {
+                        $d = $dir->results[0]->address_components[$i];
+                        switch($d->types[0]) {
+                            case 'administrative_area_level_3': //comuna
+                                $url->COMUNA = $d->long_name."";
+                                break;
+                            case 'administrative_area_level_1': //region
+                                $url->REGION = $d->long_name."";
+                                break;
+                            case 'locality':
+                                $url->CIUDAD = $d->long_name."";
+                                break;
+                            case 'country': //pais
+                                $url->PAIS = $d->long_name."";
+                                break;
+                        }
+                    }
+                    $this->diMP->insert($url);
+                } else if (strcmp($status, "620") == 0) {
+                    $delay += 100000;
+                } else {
+                    $geocode_pending = false;
+                }
+                usleep($delay);
+            }
+            $url->fuente = "GoogleMapsApi";
+            return $url;
+        }
+    }
+
     function traduceRegla($regla) {
         if($regla->ID_TIPO_REGLA != 4) {
             switch($regla->ID_PARAMETRO) {
                 case 1: //velocidad
                     switch($regla->ID_OPERADOR) {
                         case 1:
-                            return "Velocidad (".$regla->speedKPH.") > ".$regla->VALOR_REGLA." (Km/h)";
+                            return "Velocidad (".round($regla->speedKPH).") > ".$regla->VALOR_REGLA." (Km/h)";
                             break;
                         case 2:
-                            return "Velocidad (".$regla->speedKPH.") < ".$regla->VALOR_REGLA." (Km/h)";
+                            return "Velocidad (".round($regla->speedKPH).") < ".$regla->VALOR_REGLA." (Km/h)";
                             break;
                     }
                     break;

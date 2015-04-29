@@ -7,7 +7,7 @@ class DireccionMP {
     protected $_bd;
 
     function __construct() {
-        $this->_bd = new Bd("maestra", "ScAWEFNPxwjzWBmm", "10.179.7.224", "maestra");
+        $this->_bd = new Bd("maestra", "pD6AuTqjC9NwhZQF", "10.176.161.199", "maestra");
     }
 
     function find($lat, $lon, $attr = null) {
@@ -27,8 +27,9 @@ class DireccionMP {
 
     function insert($datos) {
         $sql = "INSERT INTO $this->_dbTable (LATITUD, LONGITUD, DIRECCION, COMUNA, CIUDAD, REGION, PAIS) VALUES
-                ($datos->LATITUD, $datos->LONGITUD, '$datos->DIRECCION', '$datos->COMUNA', '$datos->CIUDAD', '$datos->REGION', '$datos->PAIS')";
-//        echo $sql."<br>";
+                ($datos->LATITUD, $datos->LONGITUD, '".$this->_bd->limpia($datos->DIRECCION)."', '".$this->_bd->limpia($datos->COMUNA)."', '".$this->_bd->limpia($datos->CIUDAD)."', '".$this->_bd->limpia($datos->REGION)."', '".$this->_bd->limpia($datos->PAIS)."')";
+        // echo $sql."<br>";
+        // error_log($sql);
         $res = $this->_bd->sql($sql);
     }
 }
