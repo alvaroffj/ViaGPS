@@ -7,7 +7,7 @@ class DireccionMP {
     protected $_bd;
 
     function __construct() {
-        $this->_bd = new Bd("maestra", "pD6AuTqjC9NwhZQF", "10.176.161.199", "maestra");
+        $this->_bd = new Bd("maestra", "ScAWEFNPxwjzWBmm", "10.179.7.224", "maestra");
     }
 
     function find($lat, $lon, $attr = null) {
